@@ -9,7 +9,7 @@ import {
   YAxis,
 } from "recharts";
 import { toast } from "sonner";
-import { Download, RotateCcw, Search, Trash2, Upload } from "lucide-react";
+import { Download, RotateCcw, Search, Share2, Trash2, Upload } from "lucide-react";
 
 import { NumberGrid } from "@/components/NumberGrid";
 import { ProgressRing } from "@/components/ProgressRing";
@@ -110,7 +110,23 @@ function Index() {
     }
   };
 
+  const share = async () => {
+    const url = typeof window !== "undefined" ? window.location.origin : "";
+    const text = `Desafio 1 → 500: poupa até 125.250 €. Já vou em ${formatEur(stats.accumulated)}!`;
+    try {
+      if (typeof navigator !== "undefined" && navigator.share) {
+        await navigator.share({ title: "DESAFIO 1 → 500", text, url });
+        return;
+      }
+      await navigator.clipboard.writeText(`${text} ${url}`);
+      toast.success("Link copiado");
+    } catch {
+      /* partilha cancelada */
+    }
+  };
+
   const selectedDone = selected !== null && Boolean(state.entries[selected]);
+
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-3xl px-5 pt-10 safe-bottom">
@@ -147,7 +163,18 @@ function Index() {
         <Button size="lg" className="mt-6 w-full max-w-xs rounded-full" onClick={markNext}>
           MARCAR VALOR
         </Button>
+
+        <Button
+          variant="outline"
+          size="lg"
+          className="mt-3 w-full max-w-xs rounded-full"
+          onClick={share}
+        >
+          <Share2 className="mr-2 size-4" />
+          PARTILHAR APP
+        </Button>
       </section>
+
 
       {stats.finished && (
         <section className="mt-8 animate-[rise_0.5s_ease-out_both] rounded-3xl border border-primary/40 bg-primary/10 p-6 text-center">
