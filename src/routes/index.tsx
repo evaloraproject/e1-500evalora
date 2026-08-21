@@ -110,7 +110,23 @@ function Index() {
     }
   };
 
+  const share = async () => {
+    const url = typeof window !== "undefined" ? window.location.origin : "";
+    const text = `Desafio 1 → 500: poupa até 125.250 €. Já vou em ${formatEur(stats.accumulated)}!`;
+    try {
+      if (typeof navigator !== "undefined" && navigator.share) {
+        await navigator.share({ title: "DESAFIO 1 → 500", text, url });
+        return;
+      }
+      await navigator.clipboard.writeText(`${text} ${url}`);
+      toast.success("Link copiado");
+    } catch {
+      /* partilha cancelada */
+    }
+  };
+
   const selectedDone = selected !== null && Boolean(state.entries[selected]);
+
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-3xl px-5 pt-10 safe-bottom">
