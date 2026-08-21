@@ -35,7 +35,7 @@ function load(): ChallengeState {
 }
 
 export function formatEur(value: number) {
-  return new Intl.NumberFormat("pt-PT", {
+  return new Intl.NumberFormat("de-DE", {
     style: "currency",
     currency: "EUR",
     maximumFractionDigits: value % 1 === 0 ? 0 : 2,
