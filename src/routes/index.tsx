@@ -136,7 +136,18 @@ function Index() {
         </h1>
       </header>
 
-      <section className="relative mt-8 flex flex-col items-center">
+      <section className="mt-4 flex justify-center">
+        <Link
+          to="/recomendacoes"
+          className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-4 py-2 text-xs font-medium text-primary transition-colors hover:bg-primary/20"
+        >
+          <Gift className="size-3.5" />
+          Ganha bónus sem gastar dinheiro
+          <ArrowRight className="size-3.5" />
+        </Link>
+      </section>
+
+      <section className="relative mt-6 flex flex-col items-center">
         <div className="relative flex items-center justify-center">
           <ProgressRing progress={stats.progress} />
           <div className="absolute inset-0 flex flex-col items-center justify-center">
@@ -172,6 +183,18 @@ function Index() {
         >
           <Share2 className="mr-2 size-4" />
           PARTILHAR APP
+        </Button>
+
+        <Button
+          asChild
+          variant="secondary"
+          size="lg"
+          className="mt-3 w-full max-w-xs rounded-full"
+        >
+          <Link to="/recomendacoes">
+            <Gift className="mr-2 size-4" />
+            RECOMENDAÇÕES
+          </Link>
         </Button>
       </section>
 
