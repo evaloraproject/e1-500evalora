@@ -112,7 +112,7 @@ function Index() {
 
   const share = async () => {
     const url = typeof window !== "undefined" ? window.location.origin : "";
-    const text = `Desafio 1 → 500: poupa até 125.250 €. Já vou em ${formatEur(stats.accumulated)}!`;
+    const text = `Desafio 1 → 500: poupa até 125.250 € sem stress. Já vou em ${formatEur(stats.accumulated)}! Vê também as recomendações dentro da app.`;
     try {
       if (typeof navigator !== "undefined" && navigator.share) {
         await navigator.share({ title: "DESAFIO 1 → 500", text, url });
