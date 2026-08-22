@@ -88,7 +88,7 @@ const OFFERS = [
 
 function Recomendacoes() {
   return (
-    <main className="mx-auto min-h-screen w-full max-w-3xl px-5 py-8 safe-bottom">
+    <main className="mx-auto min-h-screen w-full max-w-md px-5 py-8 md:max-w-3xl md:px-8 lg:max-w-5xl lg:px-10 safe-bottom">
       <Link
         to="/"
         className="inline-flex items-center text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-primary"
@@ -117,7 +117,7 @@ function Recomendacoes() {
         </p>
       </section>
 
-      <section className="mt-6 grid gap-3">
+      <section className="mt-6 grid gap-3 md:grid-cols-2">
         {OFFERS.map((offer) => (
           <a
             key={offer.url}

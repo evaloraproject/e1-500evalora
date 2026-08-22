@@ -17,7 +17,7 @@ function GridImpl({ numbers, entries, justDone, onSelect }: Props) {
   }
 
   return (
-    <div className="grid grid-cols-5 gap-2 sm:grid-cols-8 md:grid-cols-10">
+    <div className="grid grid-cols-5 gap-2 sm:grid-cols-8 md:grid-cols-10 xl:grid-cols-12">
       {numbers.map((n) => {
         const done = Boolean(entries[n]);
         return (
