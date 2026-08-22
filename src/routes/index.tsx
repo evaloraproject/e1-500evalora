@@ -129,7 +129,7 @@ function Index() {
 
 
   return (
-    <main className="mx-auto min-h-screen w-full max-w-3xl px-5 pt-10 safe-bottom">
+    <main className="mx-auto min-h-screen w-full max-w-md px-5 pt-10 md:max-w-3xl md:px-8 lg:max-w-6xl lg:px-10 lg:pt-14 safe-bottom">
       <header className="text-center">
         <h1 className="text-xs font-semibold uppercase tracking-[0.4em] text-muted-foreground">
           Desafio 1 <span className="text-primary">→</span> 500
@@ -146,6 +146,9 @@ function Index() {
           <ArrowRight className="size-3.5" />
         </Link>
       </section>
+
+      <div className="mt-2 grid gap-6 lg:grid-cols-[380px_minmax(0,1fr)] lg:items-start lg:gap-10">
+      <div className="lg:sticky lg:top-8">
 
       <section className="relative mt-6 flex flex-col items-center">
         <div className="relative flex items-center justify-center">
@@ -207,7 +210,11 @@ function Index() {
         </section>
       )}
 
-      <section className="mt-10 grid grid-cols-2 gap-3">
+      </div>
+
+      <div>
+
+      <section className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:mt-0 lg:grid-cols-3">
         <Stat label="💰 Acumulado" value={formatEur(stats.accumulated)} accent />
         <Stat label="🎯 Objetivo" value={formatEur(GOAL)} />
         <Stat label="📊 Progresso" value={`${stats.progress.toFixed(1)}%`} accent />
@@ -306,7 +313,7 @@ function Index() {
         </div>
       </section>
 
-      <section className="mt-8 grid grid-cols-2 gap-2 pb-4">
+      <section className="mt-8 grid grid-cols-2 gap-2 pb-4 sm:grid-cols-4">
         <Button variant="secondary" className="rounded-2xl" onClick={undo}>
           <RotateCcw className="size-4" /> Desfazer
         </Button>
@@ -335,6 +342,9 @@ function Index() {
           }}
         />
       </section>
+
+      </div>
+      </div>
 
       <Dialog open={selected !== null} onOpenChange={(o) => !o && setSelected(null)}>
         <DialogContent className="rounded-3xl">
