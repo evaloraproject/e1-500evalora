@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useRef, useState } from "react";
 import {
   Area,
@@ -9,7 +9,7 @@ import {
   YAxis,
 } from "recharts";
 import { toast } from "sonner";
-import { Download, RotateCcw, Search, Share2, Trash2, Upload } from "lucide-react";
+import { ArrowRight, Download, Gift, RotateCcw, Search, Share2, Trash2, Upload } from "lucide-react";
 
 import { NumberGrid } from "@/components/NumberGrid";
 import { ProgressRing } from "@/components/ProgressRing";
