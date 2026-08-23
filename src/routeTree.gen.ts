@@ -10,11 +10,23 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as RankingRouteImport } from './routes/ranking'
 import { Route as RecomendacoesRouteImport } from './routes/recomendacoes'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RankingRoute = RankingRouteImport.update({
+  id: '/ranking',
+  path: '/ranking',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RecomendacoesRoute = RecomendacoesRouteImport.update({
@@ -25,27 +37,35 @@ const RecomendacoesRoute = RecomendacoesRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/ranking': typeof RankingRoute
   '/recomendacoes': typeof RecomendacoesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/ranking': typeof RankingRoute
   '/recomendacoes': typeof RecomendacoesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/ranking': typeof RankingRoute
   '/recomendacoes': typeof RecomendacoesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/recomendacoes'
+  fullPaths: '/' | '/auth' | '/ranking' | '/recomendacoes'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/recomendacoes'
-  id: '__root__' | '/' | '/recomendacoes'
+  to: '/' | '/auth' | '/ranking' | '/recomendacoes'
+  id: '__root__' | '/' | '/auth' | '/ranking' | '/recomendacoes'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
+  RankingRoute: typeof RankingRoute
   RecomendacoesRoute: typeof RecomendacoesRoute
 }
 
@@ -56,6 +76,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ranking': {
+      id: '/ranking'
+      path: '/ranking'
+      fullPath: '/ranking'
+      preLoaderRoute: typeof RankingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/recomendacoes': {
@@ -70,6 +104,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
+  RankingRoute: RankingRoute,
   RecomendacoesRoute: RecomendacoesRoute,
 }
 export const routeTree = rootRouteImport
