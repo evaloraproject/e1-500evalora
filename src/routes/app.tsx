@@ -54,6 +54,9 @@ const ALL = Array.from({ length: TOTAL_NUMBERS }, (_, i) => i + 1);
 function Index() {
   const { state, hydrated, stats, series, complete, uncomplete, undo, reset, importState } =
     useChallenge();
+  const { user } = useAuth();
+  useRankingSync(user?.id ?? null, stats, hydrated);
+  const playersCount = usePlayersCount();
 
   const [filter, setFilter] = useState<Filter>("all");
   const [query, setQuery] = useState("");
