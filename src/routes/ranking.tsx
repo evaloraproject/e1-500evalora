@@ -47,7 +47,10 @@ function RankingPage() {
         <Trophy className="size-6 text-primary" /> Ranking universal
       </h1>
       <p className="mt-2 text-sm text-muted-foreground">
-        Top 100 por total acumulado. Entra com conta para apareceres aqui.
+        {data?.length
+          ? `${data.length} ${data.length === 1 ? "jogador" : "jogadores"} · Top 100 por total acumulado.`
+          : "Top 100 por total acumulado."}{" "}
+        Entra com conta para apareceres aqui.
       </p>
 
       {!user && (

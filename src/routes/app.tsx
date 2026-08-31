@@ -9,7 +9,7 @@ import {
   YAxis,
 } from "recharts";
 import { toast } from "sonner";
-import { ArrowRight, Download, Gift, RotateCcw, Search, Share2, Trash2, Upload } from "lucide-react";
+import { ArrowRight, Download, Gift, RotateCcw, Search, Share2, Trash2, Trophy, Upload } from "lucide-react";
 
 import { NumberGrid } from "@/components/NumberGrid";
 import { ProgressRing } from "@/components/ProgressRing";
@@ -23,7 +23,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useAuth } from "@/hooks/useAuth";
 import { GOAL, TOTAL_NUMBERS, formatEur, useChallenge } from "@/lib/challenge";
+import { usePlayersCount, useRankingSync } from "@/lib/ranking";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/app")({
@@ -52,6 +54,9 @@ const ALL = Array.from({ length: TOTAL_NUMBERS }, (_, i) => i + 1);
 function Index() {
   const { state, hydrated, stats, series, complete, uncomplete, undo, reset, importState } =
     useChallenge();
+  const { user } = useAuth();
+  useRankingSync(user?.id ?? null, stats, hydrated);
+  const playersCount = usePlayersCount();
 
   const [filter, setFilter] = useState<Filter>("all");
   const [query, setQuery] = useState("");
@@ -199,6 +204,28 @@ function Index() {
             RECOMENDAÇÕES
           </Link>
         </Button>
+
+        <Button
+          asChild
+          variant="outline"
+          size="lg"
+          className="mt-3 w-full max-w-xs rounded-full"
+        >
+          <Link to="/ranking">
+            <Trophy className="mr-2 size-4" />
+            RANKING
+          </Link>
+        </Button>
+
+        {playersCount !== null && (
+          <p className="mt-3 text-xs tabular-nums text-muted-foreground">
+            {playersCount === 0
+              ? "Sê o primeiro jogador no ranking"
+              : playersCount === 1
+                ? "1 jogador registado no ranking"
+                : `${playersCount} jogadores registados no ranking`}
+          </p>
+        )}
       </section>
 
 
