@@ -90,7 +90,7 @@ function Recomendacoes() {
   return (
     <main className="mx-auto min-h-screen w-full max-w-md px-5 py-8 md:max-w-3xl md:px-8 lg:max-w-5xl lg:px-10 safe-bottom">
       <Link
-        to="/"
+        to="/app"
         className="inline-flex items-center text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-primary"
       >
         <ArrowLeft className="mr-2 size-4" />
@@ -142,7 +142,7 @@ function Recomendacoes() {
 
       <section className="mt-8 text-center">
         <Button asChild size="lg" className="rounded-full">
-          <Link to="/">
+          <Link to="/app">
             <Gift className="mr-2 size-4" />
             Voltar ao desafio
           </Link>
