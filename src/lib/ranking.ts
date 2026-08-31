@@ -82,3 +82,15 @@ export function useRankingSync(
 
   return { nickname, setNickname };
 }
+
+/** Número total de jogadores registados no ranking (leitura pública). */
+export function usePlayersCount() {
+  const [count, setCount] = useState<number | null>(null);
+  useEffect(() => {
+    void supabase
+      .from("profiles")
+      .select("id", { count: "exact", head: true })
+      .then(({ count }) => setCount(count ?? 0));
+  }, []);
+  return count;
+}

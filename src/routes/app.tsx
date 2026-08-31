@@ -9,7 +9,7 @@ import {
   YAxis,
 } from "recharts";
 import { toast } from "sonner";
-import { ArrowRight, Download, Gift, RotateCcw, Search, Share2, Trash2, Upload } from "lucide-react";
+import { ArrowRight, Download, Gift, RotateCcw, Search, Share2, Trash2, Trophy, Upload } from "lucide-react";
 
 import { NumberGrid } from "@/components/NumberGrid";
 import { ProgressRing } from "@/components/ProgressRing";
@@ -23,7 +23,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useAuth } from "@/hooks/useAuth";
 import { GOAL, TOTAL_NUMBERS, formatEur, useChallenge } from "@/lib/challenge";
+import { usePlayersCount, useRankingSync } from "@/lib/ranking";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/app")({
