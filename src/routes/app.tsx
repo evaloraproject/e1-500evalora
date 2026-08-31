@@ -26,10 +26,10 @@ import {
 import { GOAL, TOTAL_NUMBERS, formatEur, useChallenge } from "@/lib/challenge";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/app")({
   head: () => ({
     meta: [
-      { title: "DESAFIO 1 → 500 — Poupança até 125.250 €" },
+      { title: "E-VALORA — DESAFIO 1 → 500 — Poupança até 125.250 €" },
       {
         name: "description",
         content:
@@ -115,7 +115,7 @@ function Index() {
     const text = `Desafio 1 → 500: poupa até 125.250 € sem stress. Já vou em ${formatEur(stats.accumulated)}! Vê também as recomendações dentro da app.`;
     try {
       if (typeof navigator !== "undefined" && navigator.share) {
-        await navigator.share({ title: "DESAFIO 1 → 500", text, url });
+        await navigator.share({ title: "E-VALORA — DESAFIO 1 → 500", text, url });
         return;
       }
       await navigator.clipboard.writeText(`${text} ${url}`);

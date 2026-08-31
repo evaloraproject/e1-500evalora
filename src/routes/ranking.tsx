@@ -37,7 +37,7 @@ function RankingPage() {
   return (
     <main className="mx-auto min-h-screen w-full max-w-md px-5 pt-10 md:max-w-2xl md:px-8 safe-bottom">
       <Link
-        to="/"
+        to="/app"
         className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-muted-foreground"
       >
         <ArrowLeft className="size-3.5" /> Voltar
