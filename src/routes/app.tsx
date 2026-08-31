@@ -204,6 +204,28 @@ function Index() {
             RECOMENDAÇÕES
           </Link>
         </Button>
+
+        <Button
+          asChild
+          variant="outline"
+          size="lg"
+          className="mt-3 w-full max-w-xs rounded-full"
+        >
+          <Link to="/ranking">
+            <Trophy className="mr-2 size-4" />
+            RANKING
+          </Link>
+        </Button>
+
+        {playersCount !== null && (
+          <p className="mt-3 text-xs tabular-nums text-muted-foreground">
+            {playersCount === 0
+              ? "Sê o primeiro jogador no ranking"
+              : playersCount === 1
+                ? "1 jogador registado no ranking"
+                : `${playersCount} jogadores registados no ranking`}
+          </p>
+        )}
       </section>
 
 
