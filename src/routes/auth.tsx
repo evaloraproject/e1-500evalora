@@ -80,43 +80,52 @@ function AuthPage() {
   };
 
   const withEmail = async () => {
+    const mail = email.trim().toLowerCase();
+    if (!mail.includes("@")) {
+      toast.error("Escreve um email válido");
+      return;
+    }
+    if (password.length < 6) {
+      toast.error("A palavra-passe precisa de pelo menos 6 caracteres");
+      return;
+    }
     setBusy(true);
     try {
       if (mode === "signup") {
-        const { error } = await supabase.auth.signUp({
-          email,
+        const { data, error } = await supabase.auth.signUp({
+          email: mail,
           password,
           options: {
             emailRedirectTo: `${window.location.origin}/auth`,
-            data: { nickname: nickname.trim() || email.split("@")[0] },
+            data: { nickname: nickname.trim() || mail.split("@")[0] },
           },
         });
         if (error) throw error;
-        toast.success("Conta criada. Confirma o email para entrares.");
+        if (data.session) toast.success("Conta criada. Já podes definir a alcunha.");
+        else toast.success("Conta criada. Confirma o email para entrares.");
       } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        const { error } = await supabase.auth.signInWithPassword({ email: mail, password });
         if (error) throw error;
         toast.success("Sessão iniciada");
       }
     } catch (e) {
-      toast.error(e instanceof Error ? e.message : "Erro de autenticação");
+      const msg = e instanceof Error ? e.message : "";
+      if (/invalid login credentials/i.test(msg)) toast.error("Email ou palavra-passe incorretos");
+      else if (/email not confirmed/i.test(msg))
+        toast.error("Confirma primeiro o email que te enviámos");
+      else if (/already registered|user already/i.test(msg))
+        toast.error("Este email já tem conta. Escolhe “Entrar”.");
+      else toast.error(msg || "Erro de autenticação");
     } finally {
       setBusy(false);
     }
-  };
-
-  const withGoogle = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: { redirectTo: `${window.location.origin}/auth` },
-    });
-    if (error) toast.error(error.message);
   };
 
   const signOut = async () => {
     await supabase.auth.signOut();
     toast.success("Sessão terminada");
   };
+
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-md px-5 pt-10 md:max-w-lg md:px-8 safe-bottom">
@@ -138,7 +147,7 @@ function AuthPage() {
       ) : user ? (
         <section className="mt-8 space-y-4 rounded-3xl border border-border bg-card p-5">
           <p className="text-sm text-muted-foreground">
-            Sessão: <span className="text-foreground">{user.email ?? "conta Google"}</span>
+            Sessão: <span className="text-foreground">{user.email ?? "conta"}</span>
           </p>
           <div className="space-y-2">
             <label className="text-xs uppercase tracking-widest text-muted-foreground">
@@ -207,9 +216,6 @@ function AuthPage() {
           />
           <Button className="w-full rounded-full" disabled={busy} onClick={withEmail}>
             {mode === "signup" ? "Criar conta" : "Entrar"}
-          </Button>
-          <Button variant="secondary" className="w-full rounded-full" onClick={withGoogle}>
-            Continuar com Google
           </Button>
         </section>
       )}
