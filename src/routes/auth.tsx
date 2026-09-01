@@ -217,9 +217,6 @@ function AuthPage() {
           <Button className="w-full rounded-full" disabled={busy} onClick={withEmail}>
             {mode === "signup" ? "Criar conta" : "Entrar"}
           </Button>
-          <Button variant="secondary" className="w-full rounded-full" onClick={withGoogle}>
-            Continuar com Google
-          </Button>
         </section>
       )}
 
