@@ -147,7 +147,7 @@ function AuthPage() {
       ) : user ? (
         <section className="mt-8 space-y-4 rounded-3xl border border-border bg-card p-5">
           <p className="text-sm text-muted-foreground">
-            Sessão: <span className="text-foreground">{user.email ?? "conta Google"}</span>
+            Sessão: <span className="text-foreground">{user.email ?? "conta"}</span>
           </p>
           <div className="space-y-2">
             <label className="text-xs uppercase tracking-widest text-muted-foreground">
