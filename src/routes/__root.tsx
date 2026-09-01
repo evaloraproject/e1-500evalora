@@ -143,6 +143,34 @@ function RootComponent() {
     registerServiceWorker();
   }, []);
 
+  // Recover from stale/failed module chunk loads (blank screen) with a single reload.
+  useEffect(() => {
+    const KEY = "chunk-reload";
+    const isChunkError = (msg: string) =>
+      /Importing a module script failed|Failed to fetch dynamically imported module|error loading dynamically imported module/i.test(
+        msg,
+      );
+    const onError = (e: ErrorEvent | PromiseRejectionEvent) => {
+      const msg =
+        "message" in e && typeof e.message === "string"
+          ? e.message
+          : String((e as PromiseRejectionEvent).reason ?? "");
+      if (!isChunkError(msg)) return;
+      if (sessionStorage.getItem(KEY)) return;
+      sessionStorage.setItem(KEY, "1");
+      window.location.reload();
+    };
+    window.addEventListener("error", onError as EventListener);
+    window.addEventListener("unhandledrejection", onError as EventListener);
+    const t = setTimeout(() => sessionStorage.removeItem(KEY), 5000);
+    return () => {
+      clearTimeout(t);
+      window.removeEventListener("error", onError as EventListener);
+      window.removeEventListener("unhandledrejection", onError as EventListener);
+    };
+  }, []);
+
+
   return (
     <QueryClientProvider client={queryClient}>
       <Toaster theme="dark" position="top-center" />
