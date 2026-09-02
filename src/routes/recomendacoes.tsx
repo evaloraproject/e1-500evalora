@@ -23,9 +23,14 @@ export const Route = createFileRoute("/recomendacoes")({
   component: Recomendacoes,
 });
 
+function logoUrl(domain: string) {
+  return `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+}
+
 const OFFERS = [
   {
     name: "Montepio",
+    domain: "montepio.pt",
     description:
       "🏠 O teu crédito habitação pode estar a custar-te mais do que devia. Já comparaste as condições do teu banco com o Montepio? Informa-te. Compara. Poupa.",
     url: "mailto:evalora.project@gmail.com",
@@ -34,72 +39,84 @@ const OFFERS = [
   },
   {
     name: "Bybit",
+    domain: "bybit.eu",
     description: "Trade crypto. Até $100 de bónus ao registares-te e fazeres trade.",
     url: "https://partner.bybit.eu/b/aff_59342_162579",
     tag: "Crypto",
   },
   {
     name: "Crypto.com",
+    domain: "crypto.com",
     description: "Cartão, app de crypto e recompensas diárias.",
     url: "https://crypto.com/app/537dque64w",
     tag: "Crypto",
   },
   {
     name: "MEXC",
+    domain: "mexc.com",
     description: "Exchange de crypto com bónus de referido.",
     url: "https://s.mexc.com/referral/Z55YgTiyy3",
     tag: "Crypto",
   },
   {
     name: "Krak",
+    domain: "krak.app",
     description: "Pagamentos instantâneos. Usa a Kraktag @boss004 e ganhamos €10.",
     url: "https://krak.app/@boss004",
     tag: "Pagamentos",
   },
   {
     name: "Coinbase",
+    domain: "coinbase.com",
     description: "Compra e vende crypto de forma simples e segura.",
     url: "https://coinbase.com/join/QAFD2LJ?src=ios-link",
     tag: "Crypto",
   },
   {
     name: "Interlink Labs",
+    domain: "interlinklabs.ai",
     description: "Plataforma com código de referido 21798901.",
     url: "https://interlinklabs.ai/21798901",
     tag: "Outros",
   },
   {
     name: "Revolut",
+    domain: "revolut.com",
     description: "Junta-te a mais de 75 milhões de utilizadores. Bónus ao registares-te.",
     url: "https://revolut.com/referral/?referral-code=andr90qci!AUG1-26-AR&geo-redirect",
     tag: "Banco",
   },
   {
     name: "Manie",
+    domain: "manie.pt",
     description: "AutoSwitch para contratos de energia e telecom. Ativa com este link e ganha 3 meses de Boost grátis.",
     url: "https://manie.pt/referral/SDH5GQ5J",
     tag: "Poupança",
   },
   {
     name: "375go",
+    domain: "375.ai",
     description: "Ganha recompensas por reportar a qualidade da rede. Código 4QJu47CA2fnXkNYWRGaeQd.",
     url: "https://app.375.ai/auth?invitation_code=4QJu47CA2fnXkNYWRGaeQd",
     tag: "Outros",
   },
   {
     name: "Robinhood",
+    domain: "robinhood.com",
     description: "Recebe 10 € em crypto ao criares conta e depositares 10 €.",
     url: "https://join.robinhood.com/eu_crypto/andrea-ab661f0/",
     tag: "Crypto",
   },
   {
     name: "XTB",
+    domain: "xtb.com",
     description: "Plataforma de trading com ações, ETFs e crypto. Abre conta com este link de referido.",
     url: "https://app.xtb.com/Q4np/raf?af_no_preview=1&pid=raf&deep_link_value=https%3A%2F%2Fxstation5.xtb.com%2F%23%2Fdeeplink%2FrafReceive%3Fc%3Draf%26code%3DUoCUJA6RXTJhpjMdIgMp8RyQP2s8ufF1",
     tag: "Trading",
   },
   {
     name: "DigiByte Generator Bot",
+    domain: "digibyte.org",
     description: "Bot no Telegram para começares com DigiByte.",
     url: "https://t.me/digibytegeneratorbot?start=8236",
     tag: "Crypto",
@@ -145,6 +162,14 @@ function Recomendacoes() {
               className="rounded-3xl border border-border bg-card p-4 transition-colors hover:border-primary/40 hover:bg-card/80"
             >
               <div className="flex items-center gap-2">
+                <img
+                  src={logoUrl(offer.domain)}
+                  alt={`Logotipo ${offer.name}`}
+                  className="size-6 rounded-md bg-white/90 p-0.5"
+                  width={24}
+                  height={24}
+                  loading="lazy"
+                />
                 <span className="text-sm font-semibold text-foreground">{offer.name}</span>
                 <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
                   {offer.tag}
@@ -176,6 +201,14 @@ function Recomendacoes() {
             >
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
+                  <img
+                    src={logoUrl(offer.domain)}
+                    alt={`Logotipo ${offer.name}`}
+                    className="size-6 rounded-md bg-white/90 p-0.5"
+                    width={24}
+                    height={24}
+                    loading="lazy"
+                  />
                   <span className="text-sm font-semibold text-foreground">{offer.name}</span>
                   <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
                     {offer.tag}
