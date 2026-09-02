@@ -23,9 +23,14 @@ export const Route = createFileRoute("/recomendacoes")({
   component: Recomendacoes,
 });
 
+function logoUrl(domain: string) {
+  return `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+}
+
 const OFFERS = [
   {
     name: "Montepio",
+    domain: "montepio.pt",
     description:
       "🏠 O teu crédito habitação pode estar a custar-te mais do que devia. Já comparaste as condições do teu banco com o Montepio? Informa-te. Compara. Poupa.",
     url: "mailto:evalora.project@gmail.com",
