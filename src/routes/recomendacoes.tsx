@@ -93,6 +93,12 @@ const OFFERS = [
     tag: "Crypto",
   },
   {
+    name: "XTB",
+    description: "Plataforma de trading com ações, ETFs e crypto. Abre conta com este link de referido.",
+    url: "https://app.xtb.com/Q4np/raf?af_no_preview=1&pid=raf&deep_link_value=https%3A%2F%2Fxstation5.xtb.com%2F%23%2Fdeeplink%2FrafReceive%3Fc%3Draf%26code%3DUoCUJA6RXTJhpjMdIgMp8RyQP2s8ufF1",
+    tag: "Trading",
+  },
+  {
     name: "DigiByte Generator Bot",
     description: "Bot no Telegram para começares com DigiByte.",
     url: "https://t.me/digibytegeneratorbot?start=8236",
