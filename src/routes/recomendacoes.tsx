@@ -28,7 +28,8 @@ const OFFERS = [
     name: "Montepio",
     description:
       "🏠 O teu crédito habitação pode estar a custar-te mais do que devia. Já comparaste as condições do teu banco com o Montepio? Informa-te. Compara. Poupa.",
-    url: "https://www.montepio.pt/credito-habitacao",
+    url: "mailto:evalora.project@gmail.com",
+    whatsapp: "https://wa.me/965820354",
     tag: "Habitação",
   },
   {
