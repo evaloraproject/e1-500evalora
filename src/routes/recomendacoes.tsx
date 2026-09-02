@@ -132,15 +132,12 @@ function Recomendacoes() {
       </section>
 
       <section className="mt-6 grid gap-3 md:grid-cols-2">
-        {OFFERS.map((offer) => (
-          <a
-            key={offer.url}
-            href={offer.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex items-center justify-between rounded-3xl border border-border bg-card p-4 transition-colors hover:border-primary/40 hover:bg-card/80"
-          >
-            <div className="min-w-0 flex-1">
+        {OFFERS.map((offer) =>
+          offer.whatsapp ? (
+            <div
+              key={offer.url}
+              className="rounded-3xl border border-border bg-card p-4 transition-colors hover:border-primary/40 hover:bg-card/80"
+            >
               <div className="flex items-center gap-2">
                 <span className="text-sm font-semibold text-foreground">{offer.name}</span>
                 <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
@@ -148,10 +145,42 @@ function Recomendacoes() {
                 </span>
               </div>
               <p className="mt-1 text-xs text-muted-foreground">{offer.description}</p>
+              <div className="mt-3 flex gap-2">
+                <Button asChild variant="outline" size="sm" className="flex-1 rounded-full">
+                  <a href={offer.url} target="_blank" rel="noopener noreferrer">
+                    <Mail className="mr-1.5 size-3.5" />
+                    Email
+                  </a>
+                </Button>
+                <Button asChild size="sm" className="flex-1 rounded-full">
+                  <a href={offer.whatsapp} target="_blank" rel="noopener noreferrer">
+                    <MessageCircle className="mr-1.5 size-3.5" />
+                    WhatsApp
+                  </a>
+                </Button>
+              </div>
             </div>
-            <ExternalLink className="ml-3 size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-primary" />
-          </a>
-        ))}
+          ) : (
+            <a
+              key={offer.url}
+              href={offer.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center justify-between rounded-3xl border border-border bg-card p-4 transition-colors hover:border-primary/40 hover:bg-card/80"
+            >
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-semibold text-foreground">{offer.name}</span>
+                  <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+                    {offer.tag}
+                  </span>
+                </div>
+                <p className="mt-1 text-xs text-muted-foreground">{offer.description}</p>
+              </div>
+              <ExternalLink className="ml-3 size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-primary" />
+            </a>
+          )
+        )}
       </section>
 
       <section className="mt-8 text-center">
