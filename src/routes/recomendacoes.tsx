@@ -25,6 +25,13 @@ export const Route = createFileRoute("/recomendacoes")({
 
 const OFFERS = [
   {
+    name: "Montepio",
+    description:
+      "🏠 O teu crédito habitação pode estar a custar-te mais do que devia. Já comparaste as condições do teu banco com o Montepio? Informa-te. Compara. Poupa.",
+    url: "https://www.montepio.pt/credito-habitacao",
+    tag: "Habitação",
+  },
+  {
     name: "Bybit",
     description: "Trade crypto. Até $100 de bónus ao registares-te e fazeres trade.",
     url: "https://partner.bybit.eu/b/aff_59342_162579",
