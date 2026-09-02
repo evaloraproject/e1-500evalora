@@ -115,6 +115,13 @@ const OFFERS = [
     tag: "Trading",
   },
   {
+    name: "Trade Republic",
+    domain: "traderepublic.com",
+    description: "A forma mais inteligente de investir, gastar e fazer transferências. Cria conta pelo link e garante o teu bónus de boas-vindas.",
+    url: "https://refnocode.trade.re/r13nv0mf",
+    tag: "Invest",
+  },
+  {
     name: "DigiByte Generator Bot",
     domain: "digibyte.org",
     description: "Bot no Telegram para começares com DigiByte.",
