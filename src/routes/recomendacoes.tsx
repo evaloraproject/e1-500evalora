@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, ExternalLink, Gift, Sparkles } from "lucide-react";
+import { ArrowLeft, ExternalLink, Gift, Mail, MessageCircle, Sparkles } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
