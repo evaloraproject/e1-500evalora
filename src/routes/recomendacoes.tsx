@@ -162,6 +162,14 @@ function Recomendacoes() {
               className="rounded-3xl border border-border bg-card p-4 transition-colors hover:border-primary/40 hover:bg-card/80"
             >
               <div className="flex items-center gap-2">
+                <img
+                  src={logoUrl(offer.domain)}
+                  alt={`Logotipo ${offer.name}`}
+                  className="size-6 rounded-md bg-white/90 p-0.5"
+                  width={24}
+                  height={24}
+                  loading="lazy"
+                />
                 <span className="text-sm font-semibold text-foreground">{offer.name}</span>
                 <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
                   {offer.tag}
@@ -193,6 +201,14 @@ function Recomendacoes() {
             >
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
+                  <img
+                    src={logoUrl(offer.domain)}
+                    alt={`Logotipo ${offer.name}`}
+                    className="size-6 rounded-md bg-white/90 p-0.5"
+                    width={24}
+                    height={24}
+                    loading="lazy"
+                  />
                   <span className="text-sm font-semibold text-foreground">{offer.name}</span>
                   <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
                     {offer.tag}
