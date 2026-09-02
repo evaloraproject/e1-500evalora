@@ -67,6 +67,12 @@ const OFFERS = [
     tag: "Banco",
   },
   {
+    name: "Manie",
+    description: "AutoSwitch para contratos de energia e telecom. Ativa com este link e ganha 3 meses de Boost grátis.",
+    url: "https://manie.pt/referral/SDH5GQ5J",
+    tag: "Poupança",
+  },
+  {
     name: "375go",
     description: "Ganha recompensas por reportar a qualidade da rede. Código 4QJu47CA2fnXkNYWRGaeQd.",
     url: "https://app.375.ai/auth?invitation_code=4QJu47CA2fnXkNYWRGaeQd",
