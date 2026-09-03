@@ -27,7 +27,16 @@ function logoUrl(domain: string) {
   return `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
 }
 
-const OFFERS = [
+type Offer = {
+  name: string;
+  domain: string;
+  description: string;
+  url: string;
+  whatsapp?: string;
+  tag: string;
+};
+
+const OFFERS: Offer[] = [
   {
     name: "Montepio",
     domain: "montepio.pt",
