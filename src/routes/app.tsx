@@ -410,7 +410,11 @@ function Index() {
                 <Input
                   inputMode="numeric"
                   value={selectedInput}
-                  onChange={(e) => setSelectedInput(e.target.value.replace(/\D/g, ""))}
+                  onChange={(e) => {
+                    const v = e.target.value.replace(/\D/g, "");
+                    setSelectedInput(v);
+                    setActual(v);
+                  }}
                   className="h-12 rounded-2xl text-lg tabular-nums"
                 />
               </div>
