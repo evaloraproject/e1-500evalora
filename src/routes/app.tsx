@@ -394,10 +394,10 @@ function Index() {
             <DialogTitle>
               {selectedDone
                 ? `${selected} já está concluído`
-                : `Marcar ${selected} € como concluído?`}
+                : `Marcar ${selectedInput || selected} € como concluído?`}
             </DialogTitle>
             <DialogDescription>
-              Valor previsto: {selected !== null ? formatEur(selected) : ""}
+              Valor previsto: {formatEur(Number(selectedInput) || selected || 0)}
             </DialogDescription>
           </DialogHeader>
 
