@@ -61,6 +61,7 @@ function Index() {
   const [filter, setFilter] = useState<Filter>("all");
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<number | null>(null);
+  const [selectedInput, setSelectedInput] = useState("");
   const [actual, setActual] = useState("");
   const [justDone, setJustDone] = useState<number | null>(null);
   const [confirmReset, setConfirmReset] = useState(false);
@@ -78,16 +79,30 @@ function Index() {
 
   const openNumber = (n: number) => {
     setSelected(n);
+    setSelectedInput(String(n));
     setActual(String(state.entries[n]?.actual ?? n));
   };
 
   const confirm = () => {
     if (selected === null) return;
+    const target = Number(selectedInput.trim());
+    if (!Number.isInteger(target) || target < 1 || target > TOTAL_NUMBERS) {
+      toast.error("Valor inválido", {
+        description: `Escolhe um número inteiro entre 1 e ${TOTAL_NUMBERS}.`,
+      });
+      return;
+    }
+    if (state.entries[target]) {
+      toast.error(`O valor ${target} já está ocupado`, {
+        description: "Escolhe outro valor.",
+      });
+      return;
+    }
     const value = Number(actual.replace(",", "."));
-    complete(selected, Number.isFinite(value) && value >= 0 ? value : selected);
-    setJustDone(selected);
+    complete(target, Number.isFinite(value) && value >= 0 ? value : target);
+    setJustDone(target);
     window.setTimeout(() => setJustDone(null), 600);
-    toast.success(`${selected} marcado`, { description: `+ ${formatEur(value || selected)}` });
+    toast.success(`${target} marcado`, { description: `+ ${formatEur(value || target)}` });
     setSelected(null);
   };
 
@@ -379,24 +394,41 @@ function Index() {
             <DialogTitle>
               {selectedDone
                 ? `${selected} já está concluído`
-                : `Marcar ${selected} € como concluído?`}
+                : `Marcar ${selectedInput || selected} € como concluído?`}
             </DialogTitle>
             <DialogDescription>
-              Valor previsto: {selected !== null ? formatEur(selected) : ""}
+              Valor previsto: {formatEur(Number(selectedInput) || selected || 0)}
             </DialogDescription>
           </DialogHeader>
 
           {!selectedDone && (
-            <div className="space-y-2">
-              <label className="text-xs uppercase tracking-widest text-muted-foreground">
-                Valor realizado
-              </label>
-              <Input
-                inputMode="decimal"
-                value={actual}
-                onChange={(e) => setActual(e.target.value)}
-                className="h-12 rounded-2xl text-lg tabular-nums"
-              />
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-xs uppercase tracking-widest text-muted-foreground">
+                  Número (1 – {TOTAL_NUMBERS})
+                </label>
+                <Input
+                  inputMode="numeric"
+                  value={selectedInput}
+                  onChange={(e) => {
+                    const v = e.target.value.replace(/\D/g, "");
+                    setSelectedInput(v);
+                    setActual(v);
+                  }}
+                  className="h-12 rounded-2xl text-lg tabular-nums"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-xs uppercase tracking-widest text-muted-foreground">
+                  Valor realizado
+                </label>
+                <Input
+                  inputMode="decimal"
+                  value={actual}
+                  onChange={(e) => setActual(e.target.value)}
+                  className="h-12 rounded-2xl text-lg tabular-nums"
+                />
+              </div>
             </div>
           )}
 

@@ -122,6 +122,28 @@ const OFFERS = [
     tag: "Invest",
   },
   {
+    name: "CloudMineCrypto",
+    domain: "cloudminecrypto.com",
+    description:
+      "Mineração de Bitcoin: coleta recompensas em BTC. Usa o código 4m9eLk41X3JRX1MN — os dois recebemos bónus de indicação.",
+    url: "https://cloudminecrypto.com/?invite_code=4m9eLk41X3JRX1MN",
+    tag: "Crypto",
+  },
+  {
+    name: "MetaMask Rewards",
+    domain: "metamask.io",
+    description: "Carteira crypto com programa de recompensas. Código de referido 4RY7N1.",
+    url: "https://link.metamask.io/rewards?referral=4RY7N1",
+    tag: "Crypto",
+  },
+  {
+    name: "Coinbase One",
+    domain: "coinbase.com",
+    description: "Subscreve o Coinbase One e ganha vantagens extra em crypto.",
+    url: "https://coin.onelink.me/ePJg/h3mf96d7",
+    tag: "Crypto",
+  },
+  {
     name: "DigiByte Generator Bot",
     domain: "digibyte.org",
     description: "Bot no Telegram para começares com DigiByte.",
