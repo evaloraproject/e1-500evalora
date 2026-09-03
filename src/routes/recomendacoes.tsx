@@ -27,14 +27,22 @@ function logoUrl(domain: string) {
   return `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
 }
 
-const OFFERS = [
+type Offer = {
+  name: string;
+  domain: string;
+  description: string;
+  url: string;
+  whatsapp?: string;
+  tag: string;
+};
+
+const OFFERS: Offer[] = [
   {
     name: "Montepio",
     domain: "montepio.pt",
     description:
       "🏠 O teu crédito habitação pode estar a custar-te mais do que devia. Já comparaste as condições do teu banco com o Montepio? Informa-te. Compara. Poupa.",
     url: "mailto:evalora.project@gmail.com",
-    whatsapp: "https://wa.me/965820354",
     tag: "Habitação",
   },
   {
@@ -216,6 +224,35 @@ function Recomendacoes() {
                   <a href={offer.whatsapp} target="_blank" rel="noopener noreferrer">
                     <MessageCircle className="mr-1.5 size-3.5" />
                     WhatsApp
+                  </a>
+                </Button>
+              </div>
+            </div>
+          ) : offer.url.startsWith("mailto:") ? (
+            <div
+              key={offer.url}
+              className="rounded-3xl border border-border bg-card p-4 transition-colors hover:border-primary/40 hover:bg-card/80"
+            >
+              <div className="flex items-center gap-2">
+                <img
+                  src={logoUrl(offer.domain)}
+                  alt={`Logotipo ${offer.name}`}
+                  className="size-6 rounded-md bg-white/90 p-0.5"
+                  width={24}
+                  height={24}
+                  loading="lazy"
+                />
+                <span className="text-sm font-semibold text-foreground">{offer.name}</span>
+                <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+                  {offer.tag}
+                </span>
+              </div>
+              <p className="mt-1 text-xs text-muted-foreground">{offer.description}</p>
+              <div className="mt-3 flex gap-2">
+                <Button asChild variant="outline" size="sm" className="w-full rounded-full">
+                  <a href={offer.url} target="_blank" rel="noopener noreferrer">
+                    <Mail className="mr-1.5 size-3.5" />
+                    Email
                   </a>
                 </Button>
               </div>
