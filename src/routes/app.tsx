@@ -79,16 +79,30 @@ function Index() {
 
   const openNumber = (n: number) => {
     setSelected(n);
+    setSelectedInput(String(n));
     setActual(String(state.entries[n]?.actual ?? n));
   };
 
   const confirm = () => {
     if (selected === null) return;
+    const target = Number(selectedInput.trim());
+    if (!Number.isInteger(target) || target < 1 || target > TOTAL_NUMBERS) {
+      toast.error("Valor inválido", {
+        description: `Escolhe um número inteiro entre 1 e ${TOTAL_NUMBERS}.`,
+      });
+      return;
+    }
+    if (state.entries[target]) {
+      toast.error(`O valor ${target} já está ocupado`, {
+        description: "Escolhe outro valor.",
+      });
+      return;
+    }
     const value = Number(actual.replace(",", "."));
-    complete(selected, Number.isFinite(value) && value >= 0 ? value : selected);
-    setJustDone(selected);
+    complete(target, Number.isFinite(value) && value >= 0 ? value : target);
+    setJustDone(target);
     window.setTimeout(() => setJustDone(null), 600);
-    toast.success(`${selected} marcado`, { description: `+ ${formatEur(value || selected)}` });
+    toast.success(`${target} marcado`, { description: `+ ${formatEur(value || target)}` });
     setSelected(null);
   };
 
