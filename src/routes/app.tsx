@@ -61,6 +61,7 @@ function Index() {
   const [filter, setFilter] = useState<Filter>("all");
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<number | null>(null);
+  const [selectedInput, setSelectedInput] = useState("");
   const [actual, setActual] = useState("");
   const [justDone, setJustDone] = useState<number | null>(null);
   const [confirmReset, setConfirmReset] = useState(false);
