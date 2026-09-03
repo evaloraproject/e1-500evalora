@@ -402,16 +402,29 @@ function Index() {
           </DialogHeader>
 
           {!selectedDone && (
-            <div className="space-y-2">
-              <label className="text-xs uppercase tracking-widest text-muted-foreground">
-                Valor realizado
-              </label>
-              <Input
-                inputMode="decimal"
-                value={actual}
-                onChange={(e) => setActual(e.target.value)}
-                className="h-12 rounded-2xl text-lg tabular-nums"
-              />
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-xs uppercase tracking-widest text-muted-foreground">
+                  Número (1 – {TOTAL_NUMBERS})
+                </label>
+                <Input
+                  inputMode="numeric"
+                  value={selectedInput}
+                  onChange={(e) => setSelectedInput(e.target.value.replace(/\D/g, ""))}
+                  className="h-12 rounded-2xl text-lg tabular-nums"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-xs uppercase tracking-widest text-muted-foreground">
+                  Valor realizado
+                </label>
+                <Input
+                  inputMode="decimal"
+                  value={actual}
+                  onChange={(e) => setActual(e.target.value)}
+                  className="h-12 rounded-2xl text-lg tabular-nums"
+                />
+              </div>
             </div>
           )}
 
