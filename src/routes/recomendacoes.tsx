@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, ExternalLink, Gift, Mail, MessageCircle, Sparkles } from "lucide-react";
+import { ArrowLeft, ExternalLink, Gift, Mail, MessageCircle, Phone, Sparkles } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import fpcLogo from "@/assets/fpc-automatismos-logo.jpg.asset.json";
 
 export const Route = createFileRoute("/recomendacoes")({
   head: () => ({
