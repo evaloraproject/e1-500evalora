@@ -34,6 +34,8 @@ type Offer = {
   description: string;
   url: string;
   whatsapp?: string;
+  phone?: string;
+  logo?: string;
   tag: string;
 };
 
@@ -45,6 +47,16 @@ const OFFERS: Offer[] = [
       "🏠 O teu crédito habitação pode estar a custar-te mais do que devia. Já comparaste as condições do teu banco com o Montepio? Informa-te. Compara. Poupa.",
     url: "mailto:evalora.project@gmail.com",
     tag: "Habitação",
+  },
+  {
+    name: "FPC Automatismos",
+    domain: "fpcautomatismos.pt",
+    description:
+      "Automatismos, conforto e segurança para a tua casa ou empresa. Soluções inteligentes em portões, estores e sistemas de automação.",
+    url: "mailto:geral.fpcautomatismos@gmail.com",
+    phone: "tel:910978662",
+    logo: fpcLogo.url,
+    tag: "Parceria",
   },
   {
     name: "Bybit",
