@@ -205,72 +205,81 @@ function Recomendacoes() {
       </section>
 
       <section className="mt-6 grid gap-3 md:grid-cols-2">
-        {OFFERS.map((offer) =>
-          offer.whatsapp ? (
-            <div
-              key={offer.url}
-              className="rounded-3xl border border-border bg-card p-4 transition-colors hover:border-primary/40 hover:bg-card/80"
-            >
-              <div className="flex items-center gap-2">
-                <img
-                  src={logoUrl(offer.domain)}
-                  alt={`Logotipo ${offer.name}`}
-                  className="size-6 rounded-md bg-white/90 p-0.5"
-                  width={24}
-                  height={24}
-                  loading="lazy"
-                />
-                <span className="text-sm font-semibold text-foreground">{offer.name}</span>
-                <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
-                  {offer.tag}
-                </span>
-              </div>
-              <p className="mt-1 text-xs text-muted-foreground">{offer.description}</p>
-              <div className="mt-3 flex gap-2">
-                <Button asChild variant="outline" size="sm" className="flex-1 rounded-full">
-                  <a href={offer.url} target="_blank" rel="noopener noreferrer">
-                    <Mail className="mr-1.5 size-3.5" />
-                    Email
-                  </a>
-                </Button>
-                <Button asChild size="sm" className="flex-1 rounded-full">
-                  <a href={offer.whatsapp} target="_blank" rel="noopener noreferrer">
-                    <MessageCircle className="mr-1.5 size-3.5" />
-                    WhatsApp
-                  </a>
-                </Button>
-              </div>
+        {OFFERS.map((offer) => {
+          const logoSrc = offer.logo || logoUrl(offer.domain);
+          const header = (
+            <div className="flex items-center gap-2">
+              <img
+                src={logoSrc}
+                alt={`Logotipo ${offer.name}`}
+                className="size-6 rounded-md bg-white/90 p-0.5"
+                width={24}
+                height={24}
+                loading="lazy"
+              />
+              <span className="text-sm font-semibold text-foreground">{offer.name}</span>
+              <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+                {offer.tag}
+              </span>
             </div>
-          ) : offer.url.startsWith("mailto:") ? (
-            <div
-              key={offer.url}
-              className="rounded-3xl border border-border bg-card p-4 transition-colors hover:border-primary/40 hover:bg-card/80"
-            >
-              <div className="flex items-center gap-2">
-                <img
-                  src={logoUrl(offer.domain)}
-                  alt={`Logotipo ${offer.name}`}
-                  className="size-6 rounded-md bg-white/90 p-0.5"
-                  width={24}
-                  height={24}
-                  loading="lazy"
-                />
-                <span className="text-sm font-semibold text-foreground">{offer.name}</span>
-                <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
-                  {offer.tag}
-                </span>
+          );
+
+          if (offer.whatsapp || offer.phone) {
+            return (
+              <div
+                key={offer.url}
+                className="rounded-3xl border border-border bg-card p-4 transition-colors hover:border-primary/40 hover:bg-card/80"
+              >
+                {header}
+                <p className="mt-1 text-xs text-muted-foreground">{offer.description}</p>
+                <div className="mt-3 flex gap-2">
+                  <Button asChild variant="outline" size="sm" className="flex-1 rounded-full">
+                    <a href={offer.url} target="_blank" rel="noopener noreferrer">
+                      <Mail className="mr-1.5 size-3.5" />
+                      Email
+                    </a>
+                  </Button>
+                  {offer.whatsapp ? (
+                    <Button asChild size="sm" className="flex-1 rounded-full">
+                      <a href={offer.whatsapp} target="_blank" rel="noopener noreferrer">
+                        <MessageCircle className="mr-1.5 size-3.5" />
+                        WhatsApp
+                      </a>
+                    </Button>
+                  ) : (
+                    <Button asChild size="sm" className="flex-1 rounded-full">
+                      <a href={offer.phone}>
+                        <Phone className="mr-1.5 size-3.5" />
+                        Ligar
+                      </a>
+                    </Button>
+                  )}
+                </div>
               </div>
-              <p className="mt-1 text-xs text-muted-foreground">{offer.description}</p>
-              <div className="mt-3 flex gap-2">
-                <Button asChild variant="outline" size="sm" className="w-full rounded-full">
-                  <a href={offer.url} target="_blank" rel="noopener noreferrer">
-                    <Mail className="mr-1.5 size-3.5" />
-                    Email
-                  </a>
-                </Button>
+            );
+          }
+
+          if (offer.url.startsWith("mailto:")) {
+            return (
+              <div
+                key={offer.url}
+                className="rounded-3xl border border-border bg-card p-4 transition-colors hover:border-primary/40 hover:bg-card/80"
+              >
+                {header}
+                <p className="mt-1 text-xs text-muted-foreground">{offer.description}</p>
+                <div className="mt-3 flex gap-2">
+                  <Button asChild variant="outline" size="sm" className="w-full rounded-full">
+                    <a href={offer.url} target="_blank" rel="noopener noreferrer">
+                      <Mail className="mr-1.5 size-3.5" />
+                      Email
+                    </a>
+                  </Button>
+                </div>
               </div>
-            </div>
-          ) : (
+            );
+          }
+
+          return (
             <a
               key={offer.url}
               href={offer.url}
@@ -279,26 +288,13 @@ function Recomendacoes() {
               className="group flex items-center justify-between rounded-3xl border border-border bg-card p-4 transition-colors hover:border-primary/40 hover:bg-card/80"
             >
               <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2">
-                  <img
-                    src={logoUrl(offer.domain)}
-                    alt={`Logotipo ${offer.name}`}
-                    className="size-6 rounded-md bg-white/90 p-0.5"
-                    width={24}
-                    height={24}
-                    loading="lazy"
-                  />
-                  <span className="text-sm font-semibold text-foreground">{offer.name}</span>
-                  <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
-                    {offer.tag}
-                  </span>
-                </div>
+                {header}
                 <p className="mt-1 text-xs text-muted-foreground">{offer.description}</p>
               </div>
               <ExternalLink className="ml-3 size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-primary" />
             </a>
-          )
-        )}
+          );
+        })}
       </section>
 
       <section className="mt-8 text-center">
