@@ -143,6 +143,13 @@ const OFFERS: Offer[] = [
     tag: "Invest",
   },
   {
+    name: "Coinvest",
+    domain: "coinvest.liquid.trade",
+    description: "Plataforma de trading e investimento. Abre conta com este link de referido.",
+    url: "https://coinvest.liquid.trade",
+    tag: "Trading",
+  },
+  {
     name: "CloudMineCrypto",
     domain: "cloudminecrypto.com",
     description:
