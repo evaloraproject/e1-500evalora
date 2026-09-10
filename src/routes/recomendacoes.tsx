@@ -230,10 +230,10 @@ const OFFERS: Offer[] = [
 
 const TABS: { id: Category; label: string; icon: React.ElementType; description: string }[] = [
   {
-    id: "vendas",
-    label: "Vendas",
-    icon: ShoppingBag,
-    description: "Produtos e cursos que recomendo.",
+    id: "ganha-mais",
+    label: "Ganha Mais",
+    icon: TrendingUp,
+    description: "Links de convite onde podes receber bónus sem gastar.",
   },
   {
     id: "parcerias",
@@ -242,10 +242,10 @@ const TABS: { id: Category; label: string; icon: React.ElementType; description:
     description: "Parceiros diretos para poupar ou resolver o que precisas.",
   },
   {
-    id: "ganha-mais",
-    label: "Ganha Mais",
-    icon: TrendingUp,
-    description: "Links de convite onde podes receber bónus sem gastar.",
+    id: "vendas",
+    label: "Vendas",
+    icon: ShoppingBag,
+    description: "Produtos e cursos que recomendo.",
   },
 ];
 
@@ -334,7 +334,7 @@ function OfferCard({ offer }: { offer: Offer }) {
 }
 
 function Recomendacoes() {
-  const [activeTab, setActiveTab] = useState<Category>("vendas");
+  const [activeTab, setActiveTab] = useState<Category>("ganha-mais");
   const activeOffers = OFFERS.filter((offer) => offer.category === activeTab);
   const activeTabInfo = TABS.find((tab) => tab.id === activeTab)!;
 
