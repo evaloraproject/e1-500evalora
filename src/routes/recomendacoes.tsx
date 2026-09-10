@@ -226,6 +226,15 @@ const OFFERS: Offer[] = [
     tag: "Crypto",
     category: "ganha-mais",
   },
+  {
+    name: "DeNet Storage & Watcher Node",
+    domain: "denet.app",
+    description:
+      "Protocolo de armazenamento descentralizado. Instala a app móvel DeNet Storage & Watcher Node, protege a rede com o teu telemóvel e ganha recompensas. Código de referido 0xa3d46a89790a3bd609f808170c16c17798477c02.",
+    url: "https://links.denet.app/mobile?referrer=0xa3d46a89790a3bd609f808170c16c17798477c02",
+    tag: "Outros",
+    category: "ganha-mais",
+  },
 ];
 
 const TABS: { id: Category; label: string; icon: React.ElementType; description: string }[] = [
