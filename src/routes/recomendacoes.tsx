@@ -334,7 +334,7 @@ function OfferCard({ offer }: { offer: Offer }) {
 }
 
 function Recomendacoes() {
-  const [activeTab, setActiveTab] = useState<Category>("vendas");
+  const [activeTab, setActiveTab] = useState<Category>("ganha-mais");
   const activeOffers = OFFERS.filter((offer) => offer.category === activeTab);
   const activeTabInfo = TABS.find((tab) => tab.id === activeTab)!;
 
