@@ -30,7 +30,7 @@ function BoasVindas() {
         <img
           src={mascote.url}
           alt="Mascote E-VALORA a apontar para o desafio"
-          className="w-56 max-w-full rounded-3xl md:w-72"
+          className="w-48 max-w-full rounded-3xl md:w-64"
           width={928}
           height={1152}
         />
