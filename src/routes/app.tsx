@@ -151,14 +151,14 @@ function Index() {
 
 
   return (
-    <main className="mx-auto min-h-screen w-full max-w-md px-5 pt-10 md:max-w-3xl md:px-8 lg:max-w-6xl lg:px-10 lg:pt-14 safe-bottom">
+    <main className="mx-auto min-h-screen w-full max-w-md px-5 pt-8 md:max-w-3xl md:px-8 lg:max-w-6xl lg:px-10 lg:pt-12 safe-bottom">
       <header className="text-center">
         <h1 className="text-xs font-semibold uppercase tracking-[0.4em] text-muted-foreground">
           Desafio 1 <span className="text-primary">→</span> 500
         </h1>
       </header>
 
-      <section className="mt-4 flex justify-center">
+      <section className="mt-3 flex justify-center">
         <Link
           to="/recomendacoes"
           className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-4 py-2 text-xs font-medium text-primary transition-colors hover:bg-primary/20"
@@ -169,26 +169,26 @@ function Index() {
         </Link>
       </section>
 
-      <div className="mt-2 grid gap-6 lg:grid-cols-[380px_minmax(0,1fr)] lg:items-start lg:gap-10">
+      <div className="mt-4 grid gap-6 lg:grid-cols-[360px_minmax(0,1fr)] lg:items-start lg:gap-10">
       <div className="lg:sticky lg:top-8">
 
-      <section className="relative mt-6 flex flex-col items-center">
-        <div className="relative flex items-center justify-center">
-          <ProgressRing progress={stats.progress} />
+      <section className="relative mt-4 flex flex-col items-center">
+        <div className="relative flex w-full max-w-[280px] items-center justify-center md:max-w-[300px]">
+          <ProgressRing progress={stats.progress} size={isMobile ? 220 : 260} />
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <span className="text-[10px] font-medium uppercase tracking-[0.3em] text-muted-foreground">
               Total acumulado
             </span>
-            <span className="mt-2 text-4xl font-bold tabular-nums text-gradient-gold">
+            <span className="mt-1 text-3xl font-bold tabular-nums text-gradient-gold md:text-4xl">
               {hydrated ? formatEur(stats.accumulated) : "—"}
             </span>
-            <span className="mt-2 text-sm tabular-nums text-muted-foreground">
+            <span className="mt-1 text-sm tabular-nums text-muted-foreground">
               {stats.progress.toFixed(1)}% de {formatEur(GOAL)}
             </span>
           </div>
         </div>
 
-        <p className="mt-6 text-sm tabular-nums text-foreground">
+        <p className="mt-5 text-sm tabular-nums text-foreground">
           <span className="font-semibold text-primary">{stats.doneCount}</span> / {TOTAL_NUMBERS}{" "}
           concluídos
         </p>
@@ -196,14 +196,14 @@ function Index() {
           Faltam {formatEur(stats.remaining)}
         </p>
 
-        <Button size="lg" className="mt-6 w-full max-w-xs rounded-full" onClick={markNext}>
+        <Button size="lg" className="mt-5 w-full max-w-[16rem] rounded-full" onClick={markNext}>
           MARCAR VALOR
         </Button>
 
         <Button
           variant="outline"
           size="lg"
-          className="mt-3 w-full max-w-xs rounded-full"
+          className="mt-2.5 w-full max-w-[16rem] rounded-full"
           onClick={share}
         >
           <Share2 className="mr-2 size-4" />
@@ -214,7 +214,7 @@ function Index() {
           asChild
           variant="secondary"
           size="lg"
-          className="mt-3 w-full max-w-xs rounded-full"
+          className="mt-2.5 w-full max-w-[16rem] rounded-full"
         >
           <Link to="/recomendacoes">
             <Gift className="mr-2 size-4" />
@@ -226,7 +226,7 @@ function Index() {
           asChild
           variant="outline"
           size="lg"
-          className="mt-3 w-full max-w-xs rounded-full"
+          className="mt-2.5 w-full max-w-[16rem] rounded-full"
         >
           <Link to="/ranking">
             <Trophy className="mr-2 size-4" />
@@ -247,7 +247,7 @@ function Index() {
 
 
       {stats.finished && (
-        <section className="mt-8 animate-[rise_0.5s_ease-out_both] rounded-3xl border border-primary/40 bg-primary/10 p-6 text-center">
+        <section className="mt-6 animate-[rise_0.5s_ease-out_both] rounded-3xl border border-primary/40 bg-primary/10 p-5 text-center">
           <p className="text-lg font-bold text-primary">DESAFIO CONCLUÍDO 🎯</p>
           <p className="mt-1 text-sm text-foreground">1 → 500</p>
           <p className="mt-1 text-sm text-muted-foreground">125.250 € acumulados.</p>
