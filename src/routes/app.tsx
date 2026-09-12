@@ -58,6 +58,7 @@ function Index() {
   const { user } = useAuth();
   useRankingSync(user?.id ?? null, stats, hydrated);
   const playersCount = usePlayersCount();
+  const isMobile = useIsMobile();
 
   const [filter, setFilter] = useState<Filter>("all");
   const [query, setQuery] = useState("");
