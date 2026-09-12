@@ -25,17 +25,17 @@ export const Route = createFileRoute("/boas-vindas")({
 
 function BoasVindas() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-background px-6">
+    <main className="flex min-h-screen items-center justify-center bg-background px-6 py-10">
       <div className="flex w-full max-w-sm flex-col items-center text-center animate-[rise_0.8s_ease-out_both] md:max-w-md">
         <img
           src={mascote.url}
           alt="Mascote E-VALORA a apontar para o desafio"
-          className="w-64 max-w-full rounded-3xl md:w-80"
+          className="w-56 max-w-full rounded-3xl md:w-72"
           width={928}
           height={1152}
         />
-        <h1 className="mt-8 text-2xl font-bold text-foreground">Bem-vindo à E-VALORA</h1>
-        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+        <h1 className="mt-6 text-xl font-bold text-foreground md:text-2xl">Bem-vindo à E-VALORA</h1>
+        <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground md:max-w-sm">
           Eu acompanho-te nesta viagem: marca os valores de 1 a 500 €, um de cada vez, e vê o teu
           total crescer até aos 125.250 €. Sem pressa, sem stress.
         </p>
