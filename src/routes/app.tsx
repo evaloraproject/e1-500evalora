@@ -196,14 +196,14 @@ function Index() {
           Faltam {formatEur(stats.remaining)}
         </p>
 
-        <Button size="lg" className="mt-5 w-full max-w-[16rem] rounded-full" onClick={markNext}>
+        <Button size="lg" className="mt-5 w-full max-w-[15rem] rounded-full" onClick={markNext}>
           MARCAR VALOR
         </Button>
 
         <Button
           variant="outline"
           size="lg"
-          className="mt-2.5 w-full max-w-[16rem] rounded-full"
+          className="mt-3 w-full max-w-[15rem] rounded-full"
           onClick={share}
         >
           <Share2 className="mr-2 size-4" />
@@ -214,7 +214,7 @@ function Index() {
           asChild
           variant="secondary"
           size="lg"
-          className="mt-2.5 w-full max-w-[16rem] rounded-full"
+          className="mt-3 w-full max-w-[15rem] rounded-full"
         >
           <Link to="/recomendacoes">
             <Gift className="mr-2 size-4" />
@@ -226,7 +226,7 @@ function Index() {
           asChild
           variant="outline"
           size="lg"
-          className="mt-2.5 w-full max-w-[16rem] rounded-full"
+          className="mt-3 w-full max-w-[15rem] rounded-full"
         >
           <Link to="/ranking">
             <Trophy className="mr-2 size-4" />
