@@ -258,7 +258,7 @@ function Index() {
 
       <div>
 
-      <section className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:mt-0 lg:grid-cols-3">
+      <section className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:mt-0 lg:grid-cols-3">
         <Stat label="💰 Acumulado" value={formatEur(stats.accumulated)} accent />
         <Stat label="🎯 Objetivo" value={formatEur(GOAL)} />
         <Stat label="📊 Progresso" value={`${stats.progress.toFixed(1)}%`} accent />
@@ -267,11 +267,11 @@ function Index() {
         <Stat label="Falta" value={formatEur(stats.remaining)} />
       </section>
 
-      <section className="mt-6 rounded-3xl border border-border bg-card p-4">
+      <section className="mt-5 rounded-3xl border border-border bg-card p-4">
         <p className="text-[10px] font-medium uppercase tracking-[0.3em] text-muted-foreground">
           Evolução
         </p>
-        <div className="mt-3 h-44 w-full">
+        <div className="mt-3 h-40 w-full">
           {series.length > 1 ? (
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={series} margin={{ top: 4, right: 4, left: 4, bottom: 0 }}>
