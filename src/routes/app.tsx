@@ -494,11 +494,11 @@ function Index() {
 
 function Stat({ label, value, accent }: { label: string; value: string; accent?: boolean }) {
   return (
-    <div className="rounded-2xl border border-border bg-card px-4 py-3">
-      <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">{label}</p>
+    <div className="rounded-2xl border border-border bg-card px-3 py-4 text-center">
+      <p className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground">{label}</p>
       <p
         className={cn(
-          "mt-1 text-lg font-bold tabular-nums",
+          "mt-1.5 text-base font-bold tabular-nums md:text-lg",
           accent ? "text-primary" : "text-foreground",
         )}
       >
