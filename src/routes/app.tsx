@@ -24,6 +24,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useAuth } from "@/hooks/useAuth";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { GOAL, TOTAL_NUMBERS, formatEur, useChallenge } from "@/lib/challenge";
 import { usePlayersCount, useRankingSync } from "@/lib/ranking";
 import { cn } from "@/lib/utils";
