@@ -261,28 +261,30 @@ const TABS: { id: Category; label: string; icon: React.ElementType; description:
 function OfferCard({ offer }: { offer: Offer }) {
   const logoSrc = offer.logo || logoUrl(offer.domain);
   const header = (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-3">
       <img
         src={logoSrc}
         alt={`Logotipo ${offer.name}`}
-        className="size-6 rounded-md bg-white/90 p-0.5"
-        width={24}
-        height={24}
+        className="size-8 rounded-lg bg-white/90 p-0.5"
+        width={32}
+        height={32}
         loading="lazy"
       />
-      <span className="text-sm font-semibold text-foreground">{offer.name}</span>
-      <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
-        {offer.tag}
-      </span>
+      <div className="min-w-0 flex-1">
+        <span className="text-sm font-semibold text-foreground">{offer.name}</span>
+        <span className="ml-2 rounded-full bg-secondary px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+          {offer.tag}
+        </span>
+      </div>
     </div>
   );
 
   if (offer.whatsapp || offer.phone) {
     return (
-      <div className="rounded-3xl border border-border bg-card p-4 transition-colors hover:border-primary/40 hover:bg-card/80">
+      <div className="rounded-3xl border border-border bg-card p-5 transition-colors hover:border-primary/40 hover:bg-card/80">
         {header}
-        <p className="mt-1 text-xs text-muted-foreground">{offer.description}</p>
-        <div className="mt-3 flex gap-2">
+        <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{offer.description}</p>
+        <div className="mt-4 flex gap-2">
           <Button asChild variant="outline" size="sm" className="flex-1 rounded-full">
             <a href={offer.url} target="_blank" rel="noopener noreferrer">
               <Mail className="mr-1.5 size-3.5" />
@@ -311,10 +313,10 @@ function OfferCard({ offer }: { offer: Offer }) {
 
   if (offer.url.startsWith("mailto:")) {
     return (
-      <div className="rounded-3xl border border-border bg-card p-4 transition-colors hover:border-primary/40 hover:bg-card/80">
+      <div className="rounded-3xl border border-border bg-card p-5 transition-colors hover:border-primary/40 hover:bg-card/80">
         {header}
-        <p className="mt-1 text-xs text-muted-foreground">{offer.description}</p>
-        <div className="mt-3 flex gap-2">
+        <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{offer.description}</p>
+        <div className="mt-4 flex gap-2">
           <Button asChild variant="outline" size="sm" className="w-full rounded-full">
             <a href={offer.url} target="_blank" rel="noopener noreferrer">
               <Mail className="mr-1.5 size-3.5" />
@@ -331,11 +333,11 @@ function OfferCard({ offer }: { offer: Offer }) {
       href={offer.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex items-center justify-between rounded-3xl border border-border bg-card p-4 transition-colors hover:border-primary/40 hover:bg-card/80"
+      className="group flex items-center justify-between rounded-3xl border border-border bg-card p-5 transition-colors hover:border-primary/40 hover:bg-card/80"
     >
       <div className="min-w-0 flex-1">
         {header}
-        <p className="mt-1 text-xs text-muted-foreground">{offer.description}</p>
+        <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{offer.description}</p>
       </div>
       <ExternalLink className="ml-3 size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-primary" />
     </a>
@@ -348,7 +350,7 @@ function Recomendacoes() {
   const activeTabInfo = TABS.find((tab) => tab.id === activeTab)!;
 
   return (
-    <main className="mx-auto min-h-screen w-full max-w-md px-5 py-8 md:max-w-3xl md:px-8 lg:max-w-5xl lg:px-10 safe-bottom">
+    <main className="mx-auto min-h-screen w-full max-w-md px-5 py-6 md:max-w-3xl md:px-8 lg:max-w-5xl lg:px-10 safe-bottom">
       <Link
         to="/app"
         className="inline-flex items-center text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-primary"
@@ -357,16 +359,16 @@ function Recomendacoes() {
         Voltar ao desafio
       </Link>
 
-      <header className="mt-6 text-center">
+      <header className="mt-5 text-center">
         <h1 className="text-xs font-semibold uppercase tracking-[0.4em] text-muted-foreground">
           Recomendações
         </h1>
-        <p className="mt-3 text-2xl font-bold text-foreground">
+        <p className="mt-2 text-xl font-bold text-foreground md:text-2xl">
           Completa o desafio <span className="text-gradient-gold">sem gastar</span> o teu dinheiro
         </p>
       </header>
 
-      <section className="mt-6 rounded-3xl border border-primary/30 bg-primary/10 p-5 text-sm leading-relaxed text-foreground">
+      <section className="mt-5 rounded-3xl border border-primary/30 bg-primary/10 p-4 text-sm leading-relaxed text-foreground">
         <p className="flex items-start gap-2">
           <Sparkles className="mt-0.5 size-4 shrink-0 text-primary" />
           <span>
