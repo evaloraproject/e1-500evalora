@@ -261,28 +261,30 @@ const TABS: { id: Category; label: string; icon: React.ElementType; description:
 function OfferCard({ offer }: { offer: Offer }) {
   const logoSrc = offer.logo || logoUrl(offer.domain);
   const header = (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-3">
       <img
         src={logoSrc}
         alt={`Logotipo ${offer.name}`}
-        className="size-6 rounded-md bg-white/90 p-0.5"
-        width={24}
-        height={24}
+        className="size-8 rounded-lg bg-white/90 p-0.5"
+        width={32}
+        height={32}
         loading="lazy"
       />
-      <span className="text-sm font-semibold text-foreground">{offer.name}</span>
-      <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
-        {offer.tag}
-      </span>
+      <div className="min-w-0 flex-1">
+        <span className="text-sm font-semibold text-foreground">{offer.name}</span>
+        <span className="ml-2 rounded-full bg-secondary px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+          {offer.tag}
+        </span>
+      </div>
     </div>
   );
 
   if (offer.whatsapp || offer.phone) {
     return (
-      <div className="rounded-3xl border border-border bg-card p-4 transition-colors hover:border-primary/40 hover:bg-card/80">
+      <div className="rounded-3xl border border-border bg-card p-5 transition-colors hover:border-primary/40 hover:bg-card/80">
         {header}
-        <p className="mt-1 text-xs text-muted-foreground">{offer.description}</p>
-        <div className="mt-3 flex gap-2">
+        <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{offer.description}</p>
+        <div className="mt-4 flex gap-2">
           <Button asChild variant="outline" size="sm" className="flex-1 rounded-full">
             <a href={offer.url} target="_blank" rel="noopener noreferrer">
               <Mail className="mr-1.5 size-3.5" />
@@ -311,10 +313,10 @@ function OfferCard({ offer }: { offer: Offer }) {
 
   if (offer.url.startsWith("mailto:")) {
     return (
-      <div className="rounded-3xl border border-border bg-card p-4 transition-colors hover:border-primary/40 hover:bg-card/80">
+      <div className="rounded-3xl border border-border bg-card p-5 transition-colors hover:border-primary/40 hover:bg-card/80">
         {header}
-        <p className="mt-1 text-xs text-muted-foreground">{offer.description}</p>
-        <div className="mt-3 flex gap-2">
+        <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{offer.description}</p>
+        <div className="mt-4 flex gap-2">
           <Button asChild variant="outline" size="sm" className="w-full rounded-full">
             <a href={offer.url} target="_blank" rel="noopener noreferrer">
               <Mail className="mr-1.5 size-3.5" />
@@ -331,11 +333,11 @@ function OfferCard({ offer }: { offer: Offer }) {
       href={offer.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex items-center justify-between rounded-3xl border border-border bg-card p-4 transition-colors hover:border-primary/40 hover:bg-card/80"
+      className="group flex items-center justify-between rounded-3xl border border-border bg-card p-5 transition-colors hover:border-primary/40 hover:bg-card/80"
     >
       <div className="min-w-0 flex-1">
         {header}
-        <p className="mt-1 text-xs text-muted-foreground">{offer.description}</p>
+        <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{offer.description}</p>
       </div>
       <ExternalLink className="ml-3 size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-primary" />
     </a>
