@@ -350,7 +350,7 @@ function Recomendacoes() {
   const activeTabInfo = TABS.find((tab) => tab.id === activeTab)!;
 
   return (
-    <main className="mx-auto min-h-screen w-full max-w-md px-5 py-8 md:max-w-3xl md:px-8 lg:max-w-5xl lg:px-10 safe-bottom">
+    <main className="mx-auto min-h-screen w-full max-w-md px-5 py-6 md:max-w-3xl md:px-8 lg:max-w-5xl lg:px-10 safe-bottom">
       <Link
         to="/app"
         className="inline-flex items-center text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-primary"
@@ -359,16 +359,16 @@ function Recomendacoes() {
         Voltar ao desafio
       </Link>
 
-      <header className="mt-6 text-center">
+      <header className="mt-5 text-center">
         <h1 className="text-xs font-semibold uppercase tracking-[0.4em] text-muted-foreground">
           Recomendações
         </h1>
-        <p className="mt-3 text-2xl font-bold text-foreground">
+        <p className="mt-2 text-xl font-bold text-foreground md:text-2xl">
           Completa o desafio <span className="text-gradient-gold">sem gastar</span> o teu dinheiro
         </p>
       </header>
 
-      <section className="mt-6 rounded-3xl border border-primary/30 bg-primary/10 p-5 text-sm leading-relaxed text-foreground">
+      <section className="mt-5 rounded-3xl border border-primary/30 bg-primary/10 p-4 text-sm leading-relaxed text-foreground">
         <p className="flex items-start gap-2">
           <Sparkles className="mt-0.5 size-4 shrink-0 text-primary" />
           <span>
