@@ -26,17 +26,17 @@ function Splash() {
     <main className="flex min-h-screen items-center justify-center bg-background px-6">
       <Link
         to="/boas-vindas"
-        className="flex flex-col items-center animate-[rise_0.8s_ease-out_both]"
+        className="flex max-w-xs flex-col items-center animate-[rise_0.8s_ease-out_both] md:max-w-sm"
         aria-label="Entrar no desafio"
       >
         <img
           src={logo.url}
           alt="E-VALORA — Desafio 1 → 500"
-          className="w-72 max-w-full md:w-96"
+          className="w-56 max-w-full md:w-64"
           width={960}
           height={1280}
         />
-        <span className="mt-10 animate-pulse text-[10px] font-semibold uppercase tracking-[0.4em] text-muted-foreground">
+        <span className="mt-8 animate-pulse text-xs font-semibold uppercase tracking-[0.35em] text-muted-foreground">
           Toca para continuar
         </span>
       </Link>
