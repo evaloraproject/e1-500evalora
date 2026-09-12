@@ -174,7 +174,7 @@ function Index() {
 
       <section className="relative mt-4 flex flex-col items-center">
         <div className="relative flex w-full max-w-[280px] items-center justify-center md:max-w-[300px]">
-          <ProgressRing progress={stats.progress} size={isMobile ? 220 : 260} />
+          <ProgressRing progress={stats.progress} size={isMobile ? 200 : 260} />
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <span className="text-[10px] font-medium uppercase tracking-[0.3em] text-muted-foreground">
               Total acumulado
