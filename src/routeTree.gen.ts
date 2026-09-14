@@ -15,6 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BoasVindasRouteImport } from './routes/boas-vindas'
 import { Route as RankingRouteImport } from './routes/ranking'
 import { Route as RecomendacoesRouteImport } from './routes/recomendacoes'
+import { Route as SocialNetworkRouteImport } from './routes/social.$network'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,6 +47,11 @@ const RecomendacoesRoute = RecomendacoesRouteImport.update({
   path: '/recomendacoes',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SocialNetworkRoute = SocialNetworkRouteImport.update({
+  id: '/social/$network',
+  path: '/social/$network',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/boas-vindas': typeof BoasVindasRoute
   '/ranking': typeof RankingRoute
   '/recomendacoes': typeof RecomendacoesRoute
+  '/social/$network': typeof SocialNetworkRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/boas-vindas': typeof BoasVindasRoute
   '/ranking': typeof RankingRoute
   '/recomendacoes': typeof RecomendacoesRoute
+  '/social/$network': typeof SocialNetworkRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,13 +79,27 @@ export interface FileRoutesById {
   '/boas-vindas': typeof BoasVindasRoute
   '/ranking': typeof RankingRoute
   '/recomendacoes': typeof RecomendacoesRoute
+  '/social/$network': typeof SocialNetworkRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/app' | '/auth' | '/boas-vindas' | '/ranking' | '/recomendacoes'
+    | '/'
+    | '/app'
+    | '/auth'
+    | '/boas-vindas'
+    | '/ranking'
+    | '/recomendacoes'
+    | '/social/$network'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/app' | '/auth' | '/boas-vindas' | '/ranking' | '/recomendacoes'
+  to:
+    | '/'
+    | '/app'
+    | '/auth'
+    | '/boas-vindas'
+    | '/ranking'
+    | '/recomendacoes'
+    | '/social/$network'
   id:
     | '__root__'
     | '/'
@@ -86,6 +108,7 @@ export interface FileRouteTypes {
     | '/boas-vindas'
     | '/ranking'
     | '/recomendacoes'
+    | '/social/$network'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -95,6 +118,7 @@ export interface RootRouteChildren {
   BoasVindasRoute: typeof BoasVindasRoute
   RankingRoute: typeof RankingRoute
   RecomendacoesRoute: typeof RecomendacoesRoute
+  SocialNetworkRoute: typeof SocialNetworkRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -141,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RecomendacoesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/social/$network': {
+      id: '/social/$network'
+      path: '/social/$network'
+      fullPath: '/social/$network'
+      preLoaderRoute: typeof SocialNetworkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -151,6 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   BoasVindasRoute: BoasVindasRoute,
   RankingRoute: RankingRoute,
   RecomendacoesRoute: RecomendacoesRoute,
+  SocialNetworkRoute: SocialNetworkRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

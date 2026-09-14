@@ -1,7 +1,7 @@
 # Roadmap
 
 ## Em progresso
-- Nenhuma tarefa em curso.
+- [ ] Validar a abertura das redes sociais através da nova página intermédia.
 
 ## Concluído
 - [x] Equilibrar tamanhos das páginas e fotos (splash, boas-vindas, app, recomendações).
