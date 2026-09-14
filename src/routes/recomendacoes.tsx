@@ -404,7 +404,9 @@ function Recomendacoes() {
       </section>
 
       <section className="mt-4 text-center">
-        <p className="text-sm text-muted-foreground">{activeTabInfo.description}</p>
+        <p className="text-sm text-muted-foreground">
+          {activeTabInfo?.description ?? "Explora as oportunidades disponíveis."}
+        </p>
       </section>
 
       <section className="mt-4 grid gap-3 md:grid-cols-2">
