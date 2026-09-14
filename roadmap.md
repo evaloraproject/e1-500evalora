@@ -1,7 +1,7 @@
 # Roadmap
 
 ## Em progresso
-- Nenhuma tarefa em curso.
+- [ ] Corrigir o bloqueio dos links sociais no Safari (Cross-Origin-Opener-Policy).
 
 ## Concluído
 - [x] Equilibrar tamanhos das páginas e fotos (splash, boas-vindas, app, recomendações).
