@@ -9,7 +9,7 @@ type Network = {
 const NETWORKS: Network[] = [
   {
     name: "Facebook",
-    url: "https://www.facebook.com/evalora.project/",
+    url: "https://m.facebook.com/evalora.project/",
     icon: (
       <svg viewBox="0 0 24 24" fill="currentColor" className="size-5">
         <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
@@ -45,7 +45,7 @@ const NETWORKS: Network[] = [
   },
   {
     name: "Threads",
-    url: "https://www.threads.com/@evaloraproject?igshid=NTc4MTIwNjQ2YQ==",
+    url: "https://www.threads.net/@evaloraproject",
     icon: (
       <svg viewBox="0 0 24 24" fill="currentColor" className="size-5">
         <path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.395 1.5 15.502 1.472 12.01v-.086c.025-3.493.875-6.386 2.522-8.49C5.845 1.12 8.6-.061 12.18-.036h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.99.022-5.358.943-6.838 2.667-1.41 1.645-2.184 4.037-2.209 7.037v.074c.025 2.999.8 5.392 2.21 7.037 1.48 1.724 3.847 2.645 6.837 2.667 2.343.017 4.33-.682 5.762-2.024 1.268-1.19 1.96-2.838 1.998-4.752h-4.09v-2.117h6.152c.086.408.13.825.13 1.244 0 2.692-.858 4.942-2.496 6.49-1.64 1.55-3.89 2.403-6.337 2.403z" />
@@ -74,6 +74,7 @@ export function SocialLinks({ className }: Props) {
         <a
           key={network.name}
           href={network.url}
+          target="_top"
           aria-label={network.name}
           className="inline-flex size-11 items-center justify-center rounded-2xl border border-border bg-card text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
         >
