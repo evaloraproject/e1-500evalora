@@ -13,6 +13,7 @@ import { ArrowRight, Download, Gift, RotateCcw, Search, Share2, Trash2, Trophy, 
 
 import { NumberGrid } from "@/components/NumberGrid";
 import { ProgressRing } from "@/components/ProgressRing";
+import { SocialLinks } from "@/components/SocialLinks";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -43,6 +44,8 @@ export const Route = createFileRoute("/app")({
         property: "og:description",
         content: "Desafio de poupança de 1 a 500. Acumula até 125.250 € e acompanha o progresso.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: Index,
@@ -385,6 +388,13 @@ function Index() {
             e.target.value = "";
           }}
         />
+      </section>
+
+      <section className="border-t border-border py-7 text-center">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground">
+          Segue a E-VALORA
+        </p>
+        <SocialLinks className="mt-4" />
       </section>
 
       </div>

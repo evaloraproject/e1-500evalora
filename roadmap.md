@@ -1,7 +1,9 @@
 # Roadmap
 
 ## Em progresso
-- [ ] Equilibrar tamanhos das páginas e fotos (splash, boas-vindas, app, recomendações).
+- Nenhuma tarefa em curso.
 
-## Pendente
-- [ ] Adicionar links das redes sociais do E-VALORA à app.
+## Concluído
+- [x] Equilibrar tamanhos das páginas e fotos (splash, boas-vindas, app, recomendações).
+- [x] Adicionar links das redes sociais do E-VALORA ao dashboard e às recomendações.
+- [x] Confirmar o carregamento do desafio após a atualização.

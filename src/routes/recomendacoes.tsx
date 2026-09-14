@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { SocialLinks } from "@/components/SocialLinks";
 import fpcLogo from "@/assets/fpc-automatismos-logo.jpg.asset.json";
 
 export const Route = createFileRoute("/recomendacoes")({
@@ -31,6 +32,8 @@ export const Route = createFileRoute("/recomendacoes")({
         content:
           "Apps, parcerias e produtos recomendados para ganhar bónus e completar o desafio de poupança 1 → 500.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: Recomendacoes,
@@ -347,7 +350,7 @@ function OfferCard({ offer }: { offer: Offer }) {
 function Recomendacoes() {
   const [activeTab, setActiveTab] = useState<Category>("ganha-mais");
   const activeOffers = OFFERS.filter((offer) => offer.category === activeTab);
-  const activeTabInfo = TABS.find((tab) => tab.id === activeTab)!;
+  const activeTabInfo = TABS.find((tab) => tab.id === activeTab) ?? TABS[0];
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-md px-5 py-6 md:max-w-3xl md:px-8 lg:max-w-5xl lg:px-10 safe-bottom">
@@ -401,13 +404,22 @@ function Recomendacoes() {
       </section>
 
       <section className="mt-4 text-center">
-        <p className="text-sm text-muted-foreground">{activeTabInfo.description}</p>
+        <p className="text-sm text-muted-foreground">
+          {activeTabInfo?.description ?? "Explora as oportunidades disponíveis."}
+        </p>
       </section>
 
       <section className="mt-4 grid gap-3 md:grid-cols-2">
         {activeOffers.map((offer) => (
           <OfferCard key={offer.url} offer={offer} />
         ))}
+      </section>
+
+      <section className="mt-8 border-t border-border pt-7 text-center">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground">
+          Segue a E-VALORA
+        </p>
+        <SocialLinks className="mt-4" />
       </section>
 
       <section className="mt-8 text-center">
