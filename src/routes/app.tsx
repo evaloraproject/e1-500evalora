@@ -44,6 +44,8 @@ export const Route = createFileRoute("/app")({
         property: "og:description",
         content: "Desafio de poupança de 1 a 500. Acumula até 125.250 € e acompanha o progresso.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: Index,

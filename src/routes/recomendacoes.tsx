@@ -32,6 +32,8 @@ export const Route = createFileRoute("/recomendacoes")({
         content:
           "Apps, parcerias e produtos recomendados para ganhar bónus e completar o desafio de poupança 1 → 500.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: Recomendacoes,
@@ -348,7 +350,7 @@ function OfferCard({ offer }: { offer: Offer }) {
 function Recomendacoes() {
   const [activeTab, setActiveTab] = useState<Category>("ganha-mais");
   const activeOffers = OFFERS.filter((offer) => offer.category === activeTab);
-  const activeTabInfo = TABS.find((tab) => tab.id === activeTab)!;
+  const activeTabInfo = TABS.find((tab) => tab.id === activeTab) ?? TABS[0];
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-md px-5 py-6 md:max-w-3xl md:px-8 lg:max-w-5xl lg:px-10 safe-bottom">
