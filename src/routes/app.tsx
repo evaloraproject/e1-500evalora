@@ -13,6 +13,7 @@ import { ArrowRight, Download, Gift, RotateCcw, Search, Share2, Trash2, Trophy, 
 
 import { NumberGrid } from "@/components/NumberGrid";
 import { ProgressRing } from "@/components/ProgressRing";
+import { SocialLinks } from "@/components/SocialLinks";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -385,6 +386,13 @@ function Index() {
             e.target.value = "";
           }}
         />
+      </section>
+
+      <section className="border-t border-border py-7 text-center">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground">
+          Segue a E-VALORA
+        </p>
+        <SocialLinks className="mt-4" />
       </section>
 
       </div>

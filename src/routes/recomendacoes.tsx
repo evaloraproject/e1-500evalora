@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { SocialLinks } from "@/components/SocialLinks";
 import fpcLogo from "@/assets/fpc-automatismos-logo.jpg.asset.json";
 
 export const Route = createFileRoute("/recomendacoes")({
@@ -408,6 +409,13 @@ function Recomendacoes() {
         {activeOffers.map((offer) => (
           <OfferCard key={offer.url} offer={offer} />
         ))}
+      </section>
+
+      <section className="mt-8 border-t border-border pt-7 text-center">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground">
+          Segue a E-VALORA
+        </p>
+        <SocialLinks className="mt-4" />
       </section>
 
       <section className="mt-8 text-center">
