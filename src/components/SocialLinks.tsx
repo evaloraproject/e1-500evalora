@@ -74,8 +74,6 @@ export function SocialLinks({ className }: Props) {
         <a
           key={network.name}
           href={network.url}
-          target="_blank"
-          rel="noopener noreferrer"
           aria-label={network.name}
           className="inline-flex size-11 items-center justify-center rounded-2xl border border-border bg-card text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
         >
