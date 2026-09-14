@@ -1,7 +1,7 @@
 # Roadmap
 
 ## Em progresso
-- Nenhuma tarefa em curso.
+- [ ] Corrigir a falha de carregamento da página do desafio.
 
 ## Concluído
 - [x] Equilibrar tamanhos das páginas e fotos (splash, boas-vindas, app, recomendações).
