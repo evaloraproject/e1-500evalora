@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useRef, useState } from "react";
 import {
   Area,
@@ -9,11 +9,10 @@ import {
   YAxis,
 } from "recharts";
 import { toast } from "sonner";
-import { ArrowRight, Download, Gift, RotateCcw, Search, Share2, Trash2, Trophy, Upload } from "lucide-react";
+import { Download, RotateCcw, Search, Trash2, Upload } from "lucide-react";
 
 import { NumberGrid } from "@/components/NumberGrid";
 import { ProgressRing } from "@/components/ProgressRing";
-import { SocialLinks } from "@/components/SocialLinks";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -24,10 +23,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useAuth } from "@/hooks/useAuth";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { GOAL, TOTAL_NUMBERS, formatEur, useChallenge } from "@/lib/challenge";
-import { usePlayersCount, useRankingSync } from "@/lib/ranking";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/app")({
@@ -58,9 +55,6 @@ const ALL = Array.from({ length: TOTAL_NUMBERS }, (_, i) => i + 1);
 function Index() {
   const { state, hydrated, stats, series, complete, uncomplete, undo, reset, importState } =
     useChallenge();
-  const { user } = useAuth();
-  useRankingSync(user?.id ?? null, stats, hydrated);
-  const playersCount = usePlayersCount();
   const isMobile = useIsMobile();
 
   const [filter, setFilter] = useState<Filter>("all");
@@ -104,10 +98,14 @@ function Index() {
       return;
     }
     const value = Number(actual.replace(",", "."));
-    complete(target, Number.isFinite(value) && value >= 0 ? value : target);
+    if (!actual.trim() || !Number.isFinite(value) || value < 0 || Math.round(value * 100) !== value * 100) {
+      toast.error("Introduz um valor realizado válido (até duas casas decimais).");
+      return;
+    }
+    complete(target, value);
     setJustDone(target);
     window.setTimeout(() => setJustDone(null), 600);
-    toast.success(`${target} marcado`, { description: `+ ${formatEur(value || target)}` });
+    toast.success(`${target} marcado`, { description: `+ ${formatEur(value)}` });
     setSelected(null);
   };
 
@@ -123,30 +121,16 @@ function Index() {
     a.href = url;
     a.download = `desafio-1-500-${new Date().toISOString().slice(0, 10)}.json`;
     a.click();
-    URL.revokeObjectURL(url);
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
 
   const onImport = async (file: File) => {
     try {
+      if (!window.confirm("Importar este ficheiro e substituir o progresso atual?")) return;
       importState(await file.text());
       toast.success("Dados importados");
     } catch {
       toast.error("Não foi possível importar este ficheiro");
-    }
-  };
-
-  const share = async () => {
-    const url = typeof window !== "undefined" ? window.location.origin : "";
-    const text = `Desafio 1 → 500: poupa até 125.250 € sem stress. Já vou em ${formatEur(stats.accumulated)}! Vê também as recomendações dentro da app.`;
-    try {
-      if (typeof navigator !== "undefined" && navigator.share) {
-        await navigator.share({ title: "E-VALORA — DESAFIO 1 → 500", text, url });
-        return;
-      }
-      await navigator.clipboard.writeText(`${text} ${url}`);
-      toast.success("Link copiado");
-    } catch {
-      /* partilha cancelada */
     }
   };
 
@@ -160,17 +144,6 @@ function Index() {
           Desafio 1 <span className="text-primary">→</span> 500
         </h1>
       </header>
-
-      <section className="mt-3 flex justify-center">
-        <Link
-          to="/recomendacoes"
-          className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-4 py-2 text-xs font-medium text-primary transition-colors hover:bg-primary/20"
-        >
-          <Gift className="size-3.5" />
-          Ganha bónus sem gastar dinheiro
-          <ArrowRight className="size-3.5" />
-        </Link>
-      </section>
 
       <div className="mt-4 grid gap-6 lg:grid-cols-[360px_minmax(0,1fr)] lg:items-start lg:gap-10">
       <div className="lg:sticky lg:top-8">
@@ -203,49 +176,6 @@ function Index() {
           MARCAR VALOR
         </Button>
 
-        <Button
-          variant="outline"
-          size="lg"
-          className="mt-3 w-full max-w-[15rem] rounded-full"
-          onClick={share}
-        >
-          <Share2 className="mr-2 size-4" />
-          PARTILHAR APP
-        </Button>
-
-        <Button
-          asChild
-          variant="secondary"
-          size="lg"
-          className="mt-3 w-full max-w-[15rem] rounded-full"
-        >
-          <Link to="/recomendacoes">
-            <Gift className="mr-2 size-4" />
-            RECOMENDAÇÕES
-          </Link>
-        </Button>
-
-        <Button
-          asChild
-          variant="outline"
-          size="lg"
-          className="mt-3 w-full max-w-[15rem] rounded-full"
-        >
-          <Link to="/ranking">
-            <Trophy className="mr-2 size-4" />
-            RANKING
-          </Link>
-        </Button>
-
-        {playersCount !== null && (
-          <p className="mt-3 text-xs tabular-nums text-muted-foreground">
-            {playersCount === 0
-              ? "Sê o primeiro jogador no ranking"
-              : playersCount === 1
-                ? "1 jogador registado no ranking"
-                : `${playersCount} jogadores registados no ranking`}
-          </p>
-        )}
       </section>
 
 
@@ -253,7 +183,7 @@ function Index() {
         <section className="mt-6 animate-[rise_0.5s_ease-out_both] rounded-3xl border border-primary/40 bg-primary/10 p-5 text-center">
           <p className="text-lg font-bold text-primary">DESAFIO CONCLUÍDO 🎯</p>
           <p className="mt-1 text-sm text-foreground">1 → 500</p>
-          <p className="mt-1 text-sm text-muted-foreground">125.250 € acumulados.</p>
+          <p className="mt-1 text-sm text-muted-foreground">{formatEur(stats.accumulated)} acumulados.</p>
         </section>
       )}
 
@@ -361,7 +291,7 @@ function Index() {
       </section>
 
       <section className="mt-8 grid grid-cols-2 gap-2 pb-4 sm:grid-cols-4">
-        <Button variant="secondary" className="rounded-2xl" onClick={undo}>
+        <Button variant="secondary" className="rounded-2xl" onClick={undo} disabled={!state.order.length}>
           <RotateCcw className="size-4" /> Desfazer
         </Button>
         <Button variant="secondary" className="rounded-2xl" onClick={exportData}>
@@ -388,13 +318,6 @@ function Index() {
             e.target.value = "";
           }}
         />
-      </section>
-
-      <section className="border-t border-border py-7 text-center">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground">
-          Segue a E-VALORA
-        </p>
-        <SocialLinks className="mt-4" />
       </section>
 
       </div>
