@@ -93,19 +93,24 @@ export function useChallenge() {
 
   const importState = useCallback((raw: string) => {
     const parsed = JSON.parse(raw) as Partial<ChallengeState>;
-    if (!parsed || typeof parsed !== "object" || !parsed.entries) {
+    if (!parsed || typeof parsed !== "object" || !parsed.entries || typeof parsed.entries !== "object" || Array.isArray(parsed.entries)) {
       throw new Error("Ficheiro inválido");
     }
     const entries: Record<number, Entry> = {};
     for (const [k, v] of Object.entries(parsed.entries)) {
       const n = Number(k);
       if (!Number.isInteger(n) || n < 1 || n > TOTAL_NUMBERS) continue;
+      if (!v || typeof v !== "object") throw new Error("Entrada inválida");
       const e = v as Entry;
-      entries[n] = { n, actual: Number(e?.actual ?? n), at: Number(e?.at ?? Date.now()) };
+      const actual = Number(e.actual);
+      const at = Number(e.at);
+      if (!Number.isFinite(actual) || actual < 0 || !Number.isInteger(Math.round(actual * 100)) || Math.round(actual * 100) !== actual * 100 || !Number.isFinite(at)) throw new Error("Entrada inválida");
+      entries[n] = { n, actual, at };
     }
-    const order = (parsed.order ?? [])
+    if (parsed.order !== undefined && !Array.isArray(parsed.order)) throw new Error("Ordem inválida");
+    const order = [...new Set((parsed.order ?? [])
       .map(Number)
-      .filter((n) => entries[n] !== undefined);
+      .filter((n) => entries[n] !== undefined))];
     for (const n of Object.keys(entries).map(Number)) {
       if (!order.includes(n)) order.push(n);
     }
