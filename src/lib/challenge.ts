@@ -125,13 +125,12 @@ export function useChallenge() {
       .filter((e): e is Entry => Boolean(e));
     const accumulated = list.reduce((s, e) => s + e.actual, 0);
     const doneCount = list.length;
-    const plannedDone = list.reduce((s, e) => s + e.n, 0);
     return {
       accumulated,
       doneCount,
       remainingCount: TOTAL_NUMBERS - doneCount,
-      remaining: Math.max(GOAL - plannedDone, 0),
-      progress: (plannedDone / GOAL) * 100,
+      remaining: Math.max(GOAL - accumulated, 0),
+      progress: Math.min((accumulated / GOAL) * 100, 100),
       finished: doneCount === TOTAL_NUMBERS,
     };
   }, [state]);
