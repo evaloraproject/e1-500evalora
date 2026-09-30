@@ -104,7 +104,9 @@ export function useChallenge() {
       const e = v as Entry;
       const actual = Number(e.actual);
       const at = Number(e.at);
-      if (!Number.isFinite(actual) || actual < 0 || !Number.isInteger(Math.round(actual * 100)) || Math.round(actual * 100) !== actual * 100 || !Number.isFinite(at)) throw new Error("Entrada inválida");
+      const cents = actual * 100;
+      const hasAtMostTwoDecimals = Math.abs(cents - Math.round(cents)) < 1e-9;
+      if (!Number.isFinite(actual) || actual < 0 || !hasAtMostTwoDecimals || !Number.isFinite(at)) throw new Error("Entrada inválida");
       entries[n] = { n, actual, at };
     }
     if (parsed.order !== undefined && !Array.isArray(parsed.order)) throw new Error("Ordem inválida");
