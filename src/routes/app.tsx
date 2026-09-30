@@ -97,8 +97,10 @@ function Index() {
       });
       return;
     }
-    const value = Number(actual.replace(",", "."));
-    if (!actual.trim() || !Number.isFinite(value) || value < 0 || Math.round(value * 100) !== value * 100) {
+    const normalizedActual = actual.trim().replace(",", ".");
+    const value = Number(normalizedActual);
+    const validMoney = /^\\d+(?:\\.\\d{1,2})?$/.test(normalizedActual);
+    if (!validMoney || !Number.isFinite(value) || value < 0) {
       toast.error("Introduz um valor realizado válido (até duas casas decimais).");
       return;
     }
