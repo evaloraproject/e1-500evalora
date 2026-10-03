@@ -25,6 +25,8 @@ function GridImpl({ numbers, entries, justDone, onSelect }: Props) {
             key={n}
             type="button"
             onClick={() => onSelect(n)}
+            aria-pressed={done}
+            aria-label={`${n} euros — ${done ? "concluído" : "por concluir"}`}
             className={cn(
               "aspect-square rounded-xl border text-sm font-semibold tabular-nums transition-all duration-200 active:scale-95",
               done
