@@ -93,6 +93,22 @@ const OFFERS: Offer[] = [
 
   // Ganha Mais
   {
+    name: "ScrambleUp",
+    domain: "scrambleup.com",
+    description: "Plataforma recomendada pela E-VALORA. Regista-te através deste link de convite.",
+    url: "https://scrambleup.com?ref=3d24a39b",
+    tag: "Outros",
+    category: "ganha-mais",
+  },
+  {
+    name: "TimiHQS",
+    domain: "timihqs.com",
+    description: "Plataforma recomendada pela E-VALORA. Cria a tua conta através deste link de convite.",
+    url: "https://timihqs.com/#/pages/login/registerView?code=dx4evu",
+    tag: "Outros",
+    category: "ganha-mais",
+  },
+  {
     name: "Bybit",
     domain: "bybit.eu",
     description: "Trade crypto. Até $100 de bónus ao registares-te e fazeres trade.",
