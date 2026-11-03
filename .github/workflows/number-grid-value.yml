@@ -1,0 +1,40 @@
+name: NumberGrid actual savings
+
+on:
+  pull_request:
+    paths:
+      - "src/components/NumberGrid.tsx"
+      - "src/lib/number-grid.ts"
+      - "tests/number-grid.test.ts"
+      - ".github/workflows/number-grid-value.yml"
+      - "bun.lock"
+      - "package.json"
+  push:
+    branches: [main]
+    paths:
+      - "src/components/NumberGrid.tsx"
+      - "src/lib/number-grid.ts"
+      - "tests/number-grid.test.ts"
+      - ".github/workflows/number-grid-value.yml"
+      - "bun.lock"
+      - "package.json"
+
+permissions:
+  contents: read
+
+jobs:
+  number-grid-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Install locked dependencies
+        run: bun install --frozen-lockfile
+      - name: Run NumberGrid regression tests
+        run: bun test tests/number-grid.test.ts
+      - name: Check TypeScript
+        run: bunx tsc --noEmit
+      - name: Build application
+        run: bun run build
