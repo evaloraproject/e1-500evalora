@@ -1,0 +1,97 @@
+name: E-VALORA APP — entry flow E2E
+
+on:
+  push:
+    branches:
+      - agent1/restore-entry-flow-issue-10
+    paths:
+      - ".github/workflows/entry-flow-e2e.yml"
+      - "src/routes/**"
+      - "src/components/BookPage.tsx"
+      - "src/styles.css"
+      - "src/assets/*.asset.json"
+      - "tests/entry-flow.cjs"
+      - "package.json"
+      - "bun.lock"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "src/routes/**"
+      - "src/components/BookPage.tsx"
+      - "src/styles.css"
+      - "src/assets/*.asset.json"
+      - "tests/entry-flow.cjs"
+      - "package.json"
+      - "bun.lock"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: entry-flow-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  entry-flow:
+    name: Chromium + WebKit (iPhone 13 emulation)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PLAYWRIGHT_DIR: ${{ runner.temp }}/playwright
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install app dependencies from the committed lockfile
+        run: bun install --frozen-lockfile
+
+      - name: Build client and server
+        run: bun run build
+
+      - name: Install pinned Playwright and browser engines
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --prefix "$PLAYWRIGHT_DIR" --no-save --no-audit --no-fund playwright@1.56.1
+          "$PLAYWRIGHT_DIR/node_modules/.bin/playwright" install --with-deps chromium webkit
+
+      - name: Start local Vite server
+        shell: bash
+        run: |
+          set -euo pipefail
+          bun run dev -- --host 127.0.0.1 --port 5173 > "$RUNNER_TEMP/vite.log" 2>&1 &
+          echo "$!" > "$RUNNER_TEMP/vite.pid"
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:5173/ > /dev/null; then
+              echo "Vite ready on attempt $attempt."
+              exit 0
+            fi
+            sleep 2
+          done
+          cat "$RUNNER_TEMP/vite.log"
+          exit 1
+
+      - name: Run entry, recommendations, affiliate and progress checks
+        env:
+          NODE_PATH: ${{ runner.temp }}/playwright/node_modules
+          TEST_BASE_URL: http://127.0.0.1:5173
+        run: node tests/entry-flow.cjs
+
+      - name: Upload screenshots and server log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: entry-flow-evidence-${{ github.run_id }}
+          path: |
+            test-results/*.png
+            ${{ runner.temp }}/vite.log
+          if-no-files-found: warn
+          retention-days: 7
