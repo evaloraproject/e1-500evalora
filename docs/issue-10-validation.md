@@ -18,7 +18,7 @@ Estado: correção proposta; **não aprovada para publicação**.
 - Acesso direto a `/app` mantido; nenhuma migração, limpeza ou alteração do armazenamento.
 - `src/lib/challenge.ts`, referências de imagens, cartões/links de recomendações e manifesto PWA permanecem iguais a main.
 
-## Evidência e limitações
+## Evidência e limitações anteriores
 
 - `npm run build`: passou (Vite, cliente e servidor).
 - `tsc --noEmit`: passou.
@@ -26,21 +26,44 @@ Estado: correção proposta; **não aprovada para publicação**.
 - Dependências instaladas com `npm install --ignore-scripts --no-package-lock`; o lock Bun não foi alterado. Repetir CI com o lock Bun antes de aprovar.
 - `git diff --check`: passou.
 - `node --check tests/entry-flow.cjs`: passou (sintaxe do teste, não comportamento da app).
-- Teste E2E tentado: bloqueado antes de abrir a app, `Executable doesn't exist ... chromium_headless_shell-1234`.
-- Instalação dos navegadores Playwright tentada: download inválido, `End of central directory record signature not found`.
-- Não existem capturas antes/depois da app nem resultado PASSA em Safari/iPhone. A observação pública é apenas a página de projeto não encontrado.
+- Teste E2E anterior: bloqueado antes de abrir a app, `Executable doesn't exist ... chromium_headless_shell-1234`.
+- Instalação dos navegadores Playwright anterior: download inválido, `End of central directory record signature not found`.
+- Não existem capturas antes/depois da app nem resultado PASSA em Safari/iPhone físico. A observação pública anterior é apenas a página de projeto não encontrado.
 - Os assets do repositório apontam para `/__l5e/assets-v1/...` no alojamento Lovable. Disponibilidade e correspondência visual dos originais ainda precisam de validação; não foram substituídos por imagens inventadas.
 
-## Reproduzir testes num ambiente com navegadores
+## Incremento de validação automatizada — 03/11/2026
 
-Instalar dependências da app (preferencialmente `bun install --frozen-lockfile`), Playwright e os navegadores Chromium/WebKit. Iniciar a app com `npm run dev -- --host 127.0.0.1 --port 5173`. Noutra consola:
+Foi reforçado o teste E2E existente e acrescentado o workflow `.github/workflows/entry-flow-e2e.yml` na branch deste PR.
+
+O teste `tests/entry-flow.cjs` verifica agora, em Chromium e WebKit com perfil iPhone 13 emulado:
+
+1. Capa inicial e descodificação real da imagem original.
+2. Virar a página, chegada à segunda página e descodificação da imagem da mascote.
+3. Acesso às recomendações e presença das três categorias.
+4. Logótipo local de FPC Automatismos carregado.
+5. Link de afiliado Bybit exato, aberto em novo separador com `noopener noreferrer`.
+6. Progresso sintético preexistente preservado após navegação e recarregamento.
+7. Acesso direto a `/app` continua disponível.
+
+O workflow:
+- instala a aplicação com `bun install --frozen-lockfile`;
+- executa `bun run build`;
+- instala Playwright `1.56.1` fora das dependências/lockfile da aplicação;
+- instala apenas Chromium e WebKit nos runners GitHub Actions;
+- inicia servidor Vite local, sem apontar à produção;
+- executa o teste e carrega capturas/log como artefactos de CI com retenção de 7 dias;
+- usa `permissions: contents: read`, sem segredos, publicação, deploy ou escrita em dados da app.
+
+**A validação remota desta alteração só pode ser declarada depois de observar o resultado do GitHub Actions no commit do workflow.** Se as imagens Lovable `/__l5e/assets-v1/...` não estiverem disponíveis no servidor local, o teste falhará explicitamente e identificará o URL em falta; isso é um bloqueio de assets a resolver, não motivo para substituir as imagens por placeholders.
+
+## Reprodução manual
+
+Instalar dependências da app (preferencialmente `bun install --frozen-lockfile`), Playwright e os navegadores Chromium/WebKit. Iniciar a app com `bun run dev -- --host 127.0.0.1 --port 5173`. Noutra consola:
 
 ```sh
-node tests/entry-flow.cjs
+NODE_PATH=<playwright-install>/node_modules TEST_BASE_URL=http://127.0.0.1:5173 node tests/entry-flow.cjs
 ```
 
-Playwright deve estar resolúvel por Node (instalação local ou `NODE_PATH`). O teste usa apenas um contexto isolado local, com progresso sintético; não limpa dados de utilizadores. `TEST_BASE_URL` permite mudar o endereço do servidor de testes. As capturas são guardadas em `test-results/` (ignoradas por git).
+O teste usa apenas um contexto isolado local, com progresso sintético; não limpa dados de utilizadores. `TEST_BASE_URL` permite mudar o endereço do servidor de testes. As capturas são guardadas em `test-results/` (ignoradas por git).
 
-O teste cobre sessão nova, canto de virar página, segunda página, recomendações, progresso anterior, recarregamento e acesso direto ao desafio. O perfil iPhone/WebKit é emulação, não um iPhone físico.
-
-Antes de aprovação: repetir build/lint com o lock Bun, executar E2E, confirmar carregamento das imagens e links, anexar capturas, testar Safari num iPhone real (incluindo voltar/avançar e PWA existente) e confirmar o endereço/commit da publicação. Não fazer merge, deploy ou fechar a Issue 10 com base apenas na inspeção estática.
+**Limite:** WebKit em CI é uma aproximação automatizada do motor Safari, não um iPhone físico. Antes de aprovação final continuam necessários: inspeção visual humana das capturas, teste Safari num iPhone real (incluindo voltar/avançar e PWA existente) e confirmação do endereço/commit efetivamente publicado. Não fazer merge, deploy ou fechar a Issue 10 com base apenas em inspeção estática ou emulação.
