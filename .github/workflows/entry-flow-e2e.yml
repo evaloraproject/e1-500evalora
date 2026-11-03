@@ -16,6 +16,7 @@ on:
   pull_request:
     branches: ["main"]
     paths:
+      - ".github/workflows/entry-flow-e2e.yml"
       - "src/routes/**"
       - "src/components/BookPage.tsx"
       - "src/styles.css"
