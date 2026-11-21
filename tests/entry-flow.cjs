@@ -45,7 +45,7 @@ async function assertImageLoaded(page, alt) {
       await video.waitFor({ state: "visible" });
       const videoUrl = await video.getAttribute("src");
       assert.equal(videoUrl, "/media/evalora-apresentacao.mp4");
-      const videoResponse = await page.request.head(videoUrl);
+      const videoResponse = await page.request.get(videoUrl, { headers: { Range: "bytes=0-63" } });
       assert.equal(videoResponse.ok(), true);
       assert.match(videoResponse.headers()["content-type"] || "", /video\/mp4/);
       await page.screenshot({ path: `test-results/${name}-welcome.png`, fullPage: true });
@@ -100,6 +100,11 @@ async function assertImageLoaded(page, alt) {
 
       await page.goto("/app");
       await page.getByRole("link", { name: "Capa", exact: true }).waitFor();
+      await page.getByRole("button", { name: "Marcar valor" }).click();
+      await page.getByRole("button", { name: "Confirmar" }).click();
+      await page.getByText("6,25", { exact: false }).first().waitFor();
+      await page.reload();
+      await page.getByText("6,25", { exact: false }).first().waitFor();
       assert.equal(new URL(page.url()).pathname, "/app");
       await context.close();
       console.log(
