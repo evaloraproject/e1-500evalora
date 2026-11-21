@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useRef, useState } from "react";
 import {
   Area,
@@ -99,7 +99,7 @@ function Index() {
     }
     const normalizedActual = actual.trim().replace(",", ".");
     const value = Number(normalizedActual);
-    const validMoney = /^\\d+(?:\\.\\d{1,2})?$/.test(normalizedActual);
+    const validMoney = /^\d+(?:\.\d{1,2})?$/.test(normalizedActual);
     if (!validMoney || !Number.isFinite(value) || value < 0) {
       toast.error("Introduz um valor realizado válido (até duas casas decimais).");
       return;
@@ -145,6 +145,17 @@ function Index() {
         <h1 className="text-xs font-semibold uppercase tracking-[0.4em] text-muted-foreground">
           Desafio 1 <span className="text-primary">→</span> 500
         </h1>
+        <nav
+          aria-label="Navegação principal"
+          className="mt-4 flex flex-wrap justify-center gap-4 text-sm"
+        >
+          <Link to="/" className="text-primary underline underline-offset-4">
+            Capa
+          </Link>
+          <Link to="/recomendacoes" className="text-primary underline underline-offset-4">
+            Recomendações
+          </Link>
+        </nav>
       </header>
 
       <div className="mt-4 grid gap-6 lg:grid-cols-[360px_minmax(0,1fr)] lg:items-start lg:gap-10">
@@ -174,7 +185,7 @@ function Index() {
           Faltam {formatEur(stats.remaining)}
         </p>
 
-        <Button size="lg" className="mt-5 w-full max-w-[15rem] rounded-full" onClick={markNext}>
+        <Button size="lg" className="mt-5 w-full max-w-[15rem] rounded-full" disabled={!hydrated} onClick={markNext}>
           MARCAR VALOR
         </Button>
 

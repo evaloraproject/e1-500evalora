@@ -148,3 +148,42 @@
 @utility safe-bottom {
   padding-bottom: calc(env(safe-area-inset-bottom) + 1rem);
 }
+
+/* Entry pages: turn from the right corner without changing saved progress. */
+.book-perspective {
+  perspective: 1200px;
+}
+.book-page {
+  position: relative;
+  transform-origin: left center;
+  backface-visibility: hidden;
+}
+.book-page-turning {
+  animation: book-turn 650ms ease-in forwards;
+}
+.book-page-corner {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  border: 0;
+  border-radius: 0 0 1rem 0;
+  background: linear-gradient(135deg, transparent 49%, var(--primary) 50%);
+}
+.book-page-corner:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 4px;
+}
+@keyframes book-turn {
+  to {
+    transform: rotateY(-100deg);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .book-page-turning {
+    animation: none;
+  }
+}

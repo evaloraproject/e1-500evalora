@@ -8,14 +8,15 @@ import {
   Mail,
   MessageCircle,
   Phone,
+  Search,
   ShoppingBag,
   Sparkles,
   TrendingUp,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { SocialLinks } from "@/components/SocialLinks";
-import fpcLogo from "@/assets/fpc-automatismos-logo.jpg.asset.json";
 
 export const Route = createFileRoute("/recomendacoes")({
   head: () => ({
@@ -86,26 +87,51 @@ const OFFERS: Offer[] = [
       "Automatismos, conforto e segurança para a tua casa ou empresa. Soluções inteligentes em portões, estores e sistemas de automação.",
     url: "mailto:geral.fpcautomatismos@gmail.com",
     phone: "tel:910978662",
-    logo: fpcLogo.url,
+    logo: "/fpc-automatismos.png",
     tag: "Parceria",
     category: "parcerias",
   },
 
   // Ganha Mais
   {
-    name: "ScrambleUp",
-    domain: "scrambleup.com",
-    description: "Plataforma recomendada pela E-VALORA. Regista-te através deste link de convite.",
-    url: "https://scrambleup.com?ref=3d24a39b",
-    tag: "Outros",
+    name: "deshawai.com",
+    domain: "deshawai.com",
+    description: "Acede à plataforma através deste link de convite.",
+    url: "https://deshawai.com/reg?tid=N2DXLR",
+    tag: "Convite",
     category: "ganha-mais",
   },
   {
-    name: "TimiHQS",
+    name: "timihqs.com",
     domain: "timihqs.com",
-    description: "Plataforma recomendada pela E-VALORA. Cria a tua conta através deste link de convite.",
+    description: "Acede à plataforma através deste link de convite.",
     url: "https://timihqs.com/#/pages/login/registerView?code=dx4evu",
-    tag: "Outros",
+    tag: "Convite",
+    category: "ganha-mais",
+  },
+  {
+    name: "WeTradeX",
+    domain: "wetradex.group",
+    description: "Acede à plataforma através deste link de convite.",
+    url: "https://wetradex.group/invite/boss004",
+    tag: "Convite",
+    category: "ganha-mais",
+  },
+  {
+    name: "Scramble",
+    domain: "scrambleup.com",
+    description: "Acede à plataforma através deste link de convite.",
+    url: "https://scrambleup.com/?ref=3d24a39b",
+    tag: "Convite",
+    category: "ganha-mais",
+  },
+  {
+    name: "TradingView",
+    domain: "tradingview.com",
+    logo: "/tradingview.png",
+    description: "Gráficos, alertas e ferramentas de análise de mercados. Consulta os planos através deste link.",
+    url: "https://br.tradingview.com/pricing/?share_your_love=pacifiedUser16507",
+    tag: "Trading",
     category: "ganha-mais",
   },
   {
@@ -363,9 +389,18 @@ function OfferCard({ offer }: { offer: Offer }) {
   );
 }
 
+function normalizeSearch(value: string) {
+  return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
 function Recomendacoes() {
   const [activeTab, setActiveTab] = useState<Category>("ganha-mais");
-  const activeOffers = OFFERS.filter((offer) => offer.category === activeTab);
+  const [search, setSearch] = useState("");
+  const searchTerm = normalizeSearch(search.trim());
+  const activeOffers = OFFERS.filter(
+    ({ category, name, description, tag }) =>
+      category === activeTab && normalizeSearch(`${name} ${description} ${tag}`).includes(searchTerm),
+  );
   const activeTabInfo = TABS.find((tab) => tab.id === activeTab) ?? TABS[0];
 
   return (
@@ -379,11 +414,18 @@ function Recomendacoes() {
       </Link>
 
       <header className="mt-5 text-center">
+        <img
+          src="/brand/logotipo-oficial.jpeg"
+          alt="E-VALORA"
+          width={1254}
+          height={1254}
+          className="mx-auto mb-4 size-20 rounded-2xl object-contain"
+        />
         <h1 className="text-xs font-semibold uppercase tracking-[0.4em] text-muted-foreground">
           Recomendações
         </h1>
         <p className="mt-2 text-xl font-bold text-foreground md:text-2xl">
-          Completa o desafio <span className="text-gradient-gold">sem gastar</span> o teu dinheiro
+          Descobre. Compara. <span className="text-gradient-gold">Escolhe.</span>
         </p>
       </header>
 
@@ -424,13 +466,26 @@ function Recomendacoes() {
         </Button>
       </section>
 
-      <section className="mt-6 flex flex-wrap justify-center gap-2">
+      <div className="relative mt-6">
+        <Search aria-hidden="true" className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+        <Input
+          aria-label="Pesquisar recomendações na categoria selecionada"
+          placeholder="Pesquisar nesta categoria…"
+          value={search}
+          onChange={(event) => setSearch(event.target.value)}
+          className="h-12 rounded-2xl pl-11"
+        />
+      </div>
+
+      <section aria-label="Categorias de recomendações" className="mt-6 flex flex-wrap justify-center gap-2">
         {TABS.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
           return (
             <button
               key={tab.id}
+              type="button"
+              aria-pressed={isActive}
               onClick={() => setActiveTab(tab.id)}
               className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-wider transition-colors ${
                 isActive
@@ -451,6 +506,19 @@ function Recomendacoes() {
         </p>
       </section>
 
+      <p className="mt-4 text-xs text-muted-foreground" aria-live="polite">
+        {activeOffers.length} recomendações nesta seleção
+      </p>
+      {activeOffers.length === 0 && (
+        <div className="mt-4 rounded-3xl border border-border p-8 text-center">
+          <p className="text-sm text-muted-foreground">
+            Não encontrámos recomendações com esse nome nesta categoria.
+          </p>
+          <Button variant="outline" className="mt-4 rounded-full" onClick={() => setSearch("")}>
+            Limpar pesquisa
+          </Button>
+        </div>
+      )}
       <section className="mt-4 grid gap-3 md:grid-cols-2">
         {activeOffers.map((offer) => (
           <OfferCard key={offer.url} offer={offer} />
