@@ -398,6 +398,32 @@ function Recomendacoes() {
         </p>
       </section>
 
+      <section aria-label="Música recomendada" className="mt-6 rounded-3xl border border-border bg-card p-5">
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground">
+              Música / Vídeo
+            </p>
+            <h2 className="mt-2 text-base font-bold text-foreground">Uma música para acompanhar o desafio</h2>
+            <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+              Descobre este vídeo recomendado pela E-VALORA no YouTube. A reprodução só começa quando escolheres ouvir.
+            </p>
+          </div>
+          <ExternalLink aria-hidden="true" className="size-5 shrink-0 text-primary" />
+        </div>
+        <Button asChild size="sm" className="mt-4 rounded-full">
+          <a
+            href="https://www.youtube.com/watch?v=uM8oI4hqw8o"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Ouvir música recomendada no YouTube (abre numa nova janela)"
+          >
+            Ouvir no YouTube
+            <ExternalLink className="ml-2 size-3.5" aria-hidden="true" />
+          </a>
+        </Button>
+      </section>
+
       <section className="mt-6 flex flex-wrap justify-center gap-2">
         {TABS.map((tab) => {
           const Icon = tab.icon;
