@@ -9,6 +9,8 @@ export const getRouter = () => {
     routeTree,
     context: { queryClient },
     scrollRestoration: true,
+    // Support both URL forms used by the previous Pages deployment.
+    trailingSlash: "preserve",
     defaultPreloadStaleTime: 0,
   });
 
