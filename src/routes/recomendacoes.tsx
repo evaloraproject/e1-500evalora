@@ -17,7 +17,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SocialLinks } from "@/components/SocialLinks";
-import fpcLogo from "@/assets/fpc-automatismos-logo.jpg.asset.json";
 
 export const Route = createFileRoute("/recomendacoes")({
   head: () => ({
@@ -88,7 +87,7 @@ const OFFERS: Offer[] = [
       "Automatismos, conforto e segurança para a tua casa ou empresa. Soluções inteligentes em portões, estores e sistemas de automação.",
     url: "mailto:geral.fpcautomatismos@gmail.com",
     phone: "tel:910978662",
-    logo: fpcLogo.url,
+    logo: "/fpc-automatismos.png",
     tag: "Parceria",
     category: "parcerias",
   },
@@ -129,6 +128,7 @@ const OFFERS: Offer[] = [
   {
     name: "TradingView",
     domain: "tradingview.com",
+    logo: "/tradingview.png",
     description: "Gráficos, alertas e ferramentas de análise de mercados. Consulta os planos através deste link.",
     url: "https://br.tradingview.com/pricing/?share_your_love=pacifiedUser16507",
     tag: "Trading",
@@ -414,11 +414,18 @@ function Recomendacoes() {
       </Link>
 
       <header className="mt-5 text-center">
+        <img
+          src="/brand/logotipo-oficial.jpeg"
+          alt="E-VALORA"
+          width={1254}
+          height={1254}
+          className="mx-auto mb-4 size-20 rounded-2xl object-contain"
+        />
         <h1 className="text-xs font-semibold uppercase tracking-[0.4em] text-muted-foreground">
           Recomendações
         </h1>
         <p className="mt-2 text-xl font-bold text-foreground md:text-2xl">
-          Completa o desafio <span className="text-gradient-gold">sem gastar</span> o teu dinheiro
+          Descobre. Compara. <span className="text-gradient-gold">Escolhe.</span>
         </p>
       </header>
 
