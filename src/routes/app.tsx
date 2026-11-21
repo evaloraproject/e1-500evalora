@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState, type FormEvent } from "react";
 import {
   Area,
   AreaChart,
@@ -51,6 +51,7 @@ export const Route = createFileRoute("/app")({
 type Filter = "all" | "done" | "todo";
 
 const ALL = Array.from({ length: TOTAL_NUMBERS }, (_, i) => i + 1);
+const GRID_PAGE_SIZE = 50;
 
 function Index() {
   const { state, hydrated, stats, series, complete, uncomplete, undo, reset, importState } =
@@ -59,9 +60,11 @@ function Index() {
 
   const [filter, setFilter] = useState<Filter>("all");
   const [query, setQuery] = useState("");
+  const [visibleCount, setVisibleCount] = useState(GRID_PAGE_SIZE);
   const [selected, setSelected] = useState<number | null>(null);
   const [selectedInput, setSelectedInput] = useState("");
   const [actual, setActual] = useState("");
+  const [formError, setFormError] = useState("");
   const [justDone, setJustDone] = useState<number | null>(null);
   const [confirmReset, setConfirmReset] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
@@ -76,32 +79,33 @@ function Index() {
     });
   }, [filter, query, state.entries]);
 
+  const nextNumber = ALL.find((n) => !state.entries[n]);
+
   const openNumber = (n: number) => {
+    if (!hydrated) return;
+    setFormError("");
     setSelected(n);
     setSelectedInput(String(n));
     setActual(String(state.entries[n]?.actual ?? n));
   };
 
-  const confirm = () => {
+  const confirm = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     if (selected === null) return;
     const target = Number(selectedInput.trim());
     if (!Number.isInteger(target) || target < 1 || target > TOTAL_NUMBERS) {
-      toast.error("Valor inválido", {
-        description: `Escolhe um número inteiro entre 1 e ${TOTAL_NUMBERS}.`,
-      });
+      setFormError(`Escolhe um número inteiro entre 1 e ${TOTAL_NUMBERS}.`);
       return;
     }
     if (state.entries[target]) {
-      toast.error(`O valor ${target} já está ocupado`, {
-        description: "Escolhe outro valor.",
-      });
+      setFormError(`O número ${target} já está concluído. Escolhe outro número.`);
       return;
     }
     const normalizedActual = actual.trim().replace(",", ".");
     const value = Number(normalizedActual);
     const validMoney = /^\d+(?:\.\d{1,2})?$/.test(normalizedActual);
     if (!validMoney || !Number.isFinite(value) || value < 0) {
-      toast.error("Introduz um valor realizado válido (até duas casas decimais).");
+      setFormError("Introduz um montante com até duas casas decimais.");
       return;
     }
     complete(target, value);
@@ -109,11 +113,6 @@ function Index() {
     window.setTimeout(() => setJustDone(null), 600);
     toast.success(`${target} marcado`, { description: `+ ${formatEur(value)}` });
     setSelected(null);
-  };
-
-  const markNext = () => {
-    const next = ALL.find((n) => !state.entries[n]);
-    if (next) openNumber(next);
   };
 
   const exportData = () => {
@@ -152,6 +151,9 @@ function Index() {
           <Link to="/" className="text-primary underline underline-offset-4">
             Capa
           </Link>
+          <Link to="/boas-vindas" className="text-primary underline underline-offset-4">
+            Como funciona
+          </Link>
           <Link to="/recomendacoes" className="text-primary underline underline-offset-4">
             Recomendações
           </Link>
@@ -185,9 +187,16 @@ function Index() {
           Faltam {formatEur(stats.remaining)}
         </p>
 
-        <Button size="lg" className="mt-5 w-full max-w-[15rem] rounded-full" disabled={!hydrated} onClick={markNext}>
-          MARCAR VALOR
-        </Button>
+        {nextNumber !== undefined && (
+          <Button
+            size="lg"
+            className="mt-5 h-12 w-full max-w-xs rounded-2xl text-base"
+            disabled={!hydrated}
+            onClick={() => openNumber(nextNumber)}
+          >
+            {hydrated ? `Registar ${formatEur(nextNumber)}` : "A carregar progresso…"}
+          </Button>
+        )}
 
       </section>
 
@@ -203,6 +212,71 @@ function Index() {
       </div>
 
       <div>
+
+      <section aria-labelledby="numbers-heading">
+        <h2 id="numbers-heading" className="text-xl font-semibold">Números do desafio</h2>
+        <div className="relative mt-3">
+          <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            inputMode="numeric"
+            value={query}
+            onChange={(event) => {
+              setQuery(event.target.value);
+              setVisibleCount(GRID_PAGE_SIZE);
+            }}
+            aria-label="Procurar número"
+            placeholder="Procurar número"
+            className="h-12 rounded-2xl pl-10"
+          />
+        </div>
+
+        <div className="mt-3 grid grid-cols-3 gap-2">
+          {(
+            [
+              ["all", "Todos"],
+              ["done", "Concluídos"],
+              ["todo", "Por concluir"],
+            ] as [Filter, string][]
+          ).map(([key, label]) => (
+            <button
+              key={key}
+              type="button"
+              aria-pressed={filter === key}
+              onClick={() => {
+                setFilter(key);
+                setVisibleCount(GRID_PAGE_SIZE);
+              }}
+              className={cn(
+                "min-h-11 rounded-full border py-2 text-xs font-semibold transition-colors",
+                filter === key
+                  ? "border-primary bg-primary/15 text-primary"
+                  : "border-border bg-secondary/50 text-muted-foreground",
+              )}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+
+        <div className="mt-4">
+          <NumberGrid
+            numbers={numbers.slice(0, visibleCount)}
+            entries={state.entries}
+            justDone={justDone}
+            onSelect={openNumber}
+          />
+        </div>
+
+        {visibleCount < numbers.length && (
+          <Button
+            variant="outline"
+            className="mt-4 w-full rounded-xl"
+            onClick={() => setVisibleCount((count) => count + GRID_PAGE_SIZE)}
+          >
+            Mostrar mais números ({Math.min(visibleCount, numbers.length)} de {numbers.length})
+          </Button>
+        )}
+      </section>
 
       <section className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:mt-0 lg:grid-cols-3">
         <Stat label="💰 Acumulado" value={formatEur(stats.accumulated)} accent />
@@ -257,52 +331,6 @@ function Index() {
         </div>
       </section>
 
-      <section className="mt-8">
-        <div className="relative">
-          <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-          <Input
-            inputMode="numeric"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Procurar número"
-            className="h-12 rounded-2xl pl-10"
-          />
-        </div>
-
-        <div className="mt-3 grid grid-cols-3 gap-2">
-          {(
-            [
-              ["all", "Todos"],
-              ["done", "Concluídos"],
-              ["todo", "Por concluir"],
-            ] as [Filter, string][]
-          ).map(([key, label]) => (
-            <button
-              key={key}
-              type="button"
-              onClick={() => setFilter(key)}
-              className={cn(
-                "rounded-full border py-2 text-xs font-semibold transition-colors",
-                filter === key
-                  ? "border-primary bg-primary/15 text-primary"
-                  : "border-border bg-secondary/50 text-muted-foreground",
-              )}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-
-        <div className="mt-4">
-          <NumberGrid
-            numbers={numbers}
-            entries={state.entries}
-            justDone={justDone}
-            onSelect={openNumber}
-          />
-        </div>
-      </section>
-
       <section className="mt-8 grid grid-cols-2 gap-2 pb-4 sm:grid-cols-4">
         <Button variant="secondary" className="rounded-2xl" onClick={undo} disabled={!state.order.length}>
           <RotateCcw className="size-4" /> Desfazer
@@ -338,69 +366,93 @@ function Index() {
 
       <Dialog open={selected !== null} onOpenChange={(o) => !o && setSelected(null)}>
         <DialogContent className="rounded-3xl">
-          <DialogHeader>
-            <DialogTitle>
-              {selectedDone
-                ? `${selected} já está concluído`
-                : `Marcar ${selectedInput || selected} € como concluído?`}
-            </DialogTitle>
-            <DialogDescription>
-              Valor previsto: {formatEur(Number(selectedInput) || selected || 0)}
-            </DialogDescription>
-          </DialogHeader>
+          <form onSubmit={confirm} className="grid gap-4">
+            <DialogHeader>
+              <DialogTitle>
+                {selectedDone ? `Número ${selected} concluído` : "Registar poupança"}
+              </DialogTitle>
+              <DialogDescription>
+                {selectedDone && selected !== null
+                  ? `Poupaste ${formatEur(state.entries[selected].actual)} neste número.`
+                  : `Número do desafio: ${selectedInput || selected} de ${TOTAL_NUMBERS}.`}
+              </DialogDescription>
+            </DialogHeader>
 
-          {!selectedDone && (
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <label className="text-xs uppercase tracking-widest text-muted-foreground">
-                  Número (1 – {TOTAL_NUMBERS})
-                </label>
-                <Input
-                  inputMode="numeric"
-                  value={selectedInput}
-                  onChange={(e) => {
-                    const v = e.target.value.replace(/\D/g, "");
-                    setSelectedInput(v);
-                    setActual(v);
-                  }}
-                  className="h-12 rounded-2xl text-lg tabular-nums"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-xs uppercase tracking-widest text-muted-foreground">
-                  Valor realizado
-                </label>
-                <Input
-                  inputMode="decimal"
-                  value={actual}
-                  onChange={(e) => setActual(e.target.value)}
-                  className="h-12 rounded-2xl text-lg tabular-nums"
-                />
-              </div>
-            </div>
-          )}
+            {!selectedDone && (
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <label htmlFor="saving-amount" className="block text-sm font-semibold">
+                    Quanto poupaste?
+                  </label>
+                  <div className="relative">
+                    <Input
+                      id="saving-amount"
+                      inputMode="decimal"
+                      value={actual}
+                      onChange={(event) => {
+                        setActual(event.target.value);
+                        setFormError("");
+                      }}
+                      className="h-12 rounded-2xl pr-10 text-lg tabular-nums"
+                    />
+                    <span aria-hidden="true" className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground">
+                      €
+                    </span>
+                  </div>
+                </div>
 
-          <DialogFooter className="gap-2 sm:gap-2">
-            <Button variant="secondary" className="rounded-full" onClick={() => setSelected(null)}>
-              Cancelar
-            </Button>
-            {selectedDone ? (
-              <Button
-                variant="destructive"
-                className="rounded-full"
-                onClick={() => {
-                  if (selected !== null) uncomplete(selected);
-                  setSelected(null);
-                }}
-              >
-                Desmarcar
-              </Button>
-            ) : (
-              <Button className="rounded-full" onClick={confirm}>
-                Confirmar
-              </Button>
+                <details>
+                  <summary className="w-fit cursor-pointer rounded text-sm text-primary underline underline-offset-4">
+                    Escolher outro número
+                  </summary>
+                  <label htmlFor="saving-number" className="mt-3 block text-sm font-semibold">
+                    Número do desafio
+                  </label>
+                  <Input
+                    id="saving-number"
+                    inputMode="numeric"
+                    value={selectedInput}
+                    onChange={(event) => {
+                      const nextInput = event.target.value.replace(/\D/g, "");
+                      if (actual === selectedInput) setActual(nextInput);
+                      setSelectedInput(nextInput);
+                      setFormError("");
+                    }}
+                    className="mt-2 h-12 rounded-2xl text-lg tabular-nums"
+                  />
+                </details>
+
+                {formError && (
+                  <p role="alert" className="rounded-xl bg-destructive/10 px-3 py-2 text-sm">
+                    {formError}
+                  </p>
+                )}
+              </div>
             )}
-          </DialogFooter>
+
+            <DialogFooter className="gap-2 sm:gap-2">
+              <Button type="button" variant="secondary" className="rounded-full" onClick={() => setSelected(null)}>
+                Cancelar
+              </Button>
+              {selectedDone ? (
+                <Button
+                  type="button"
+                  variant="destructive"
+                  className="rounded-full"
+                  onClick={() => {
+                    if (selected !== null) uncomplete(selected);
+                    setSelected(null);
+                  }}
+                >
+                  Desmarcar
+                </Button>
+              ) : (
+                <Button type="submit" className="rounded-full">
+                  Guardar poupança
+                </Button>
+              )}
+            </DialogFooter>
+          </form>
         </DialogContent>
       </Dialog>
 

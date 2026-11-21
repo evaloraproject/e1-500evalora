@@ -41,16 +41,21 @@ async function assertImageLoaded(page, alt) {
 
       await page.getByRole("button", { name: "Virar a página", exact: true }).click();
       await page.waitForURL("**/boas-vindas");
-      const video = page.locator('video[aria-label="Apresentação da app E-VALORA"]');
+      const start = page.getByRole("link", { name: "Começar o desafio" });
+      const startBox = await start.boundingBox();
+      assert(startBox && startBox.y + startBox.height < 500, "A entrada deve estar visível antes do vídeo");
+      const video = page.getByLabel("Guia rápido do desafio E-VALORA");
+      assert.equal(await video.isVisible(), false, "O guia deve ser opcional");
+      await page.getByText("Ver guia rápido", { exact: true }).click();
       await video.waitFor({ state: "visible" });
       const videoUrl = await video.getAttribute("src");
-      assert.equal(videoUrl, "/media/evalora-apresentacao.mp4");
+      assert.equal(videoUrl, "/media/evalora-guia.mp4");
       const videoResponse = await page.request.get(videoUrl, { headers: { Range: "bytes=0-63" } });
       assert.equal(videoResponse.ok(), true);
       assert.match(videoResponse.headers()["content-type"] || "", /video\/mp4/);
       await page.screenshot({ path: `test-results/${name}-welcome.png`, fullPage: true });
 
-      await page.getByRole("link", { name: "COMEÇAR O DESAFIO" }).click();
+      await page.getByRole("link", { name: "Começar o desafio" }).click();
       await page.waitForURL("**/app");
       await page.getByRole("link", { name: "Recomendações", exact: true }).click();
       await page.waitForURL("**/recomendacoes");
@@ -87,7 +92,7 @@ async function assertImageLoaded(page, alt) {
       );
       await page.goto("/", { waitUntil: "domcontentloaded" });
       await page.getByRole("button", { name: "CONTINUAR" }).click();
-      await page.getByRole("link", { name: "COMEÇAR O DESAFIO" }).click();
+      await page.getByRole("link", { name: "Começar o desafio" }).click();
       await page.waitForURL("**/app");
       await page.getByText("5,25", { exact: false }).first().waitFor();
       await page.reload({ waitUntil: "domcontentloaded" });
@@ -102,11 +107,21 @@ async function assertImageLoaded(page, alt) {
       const directApp = await context.newPage();
       await directApp.goto("/app", { waitUntil: "domcontentloaded" });
       await directApp.getByRole("link", { name: "Capa", exact: true }).waitFor();
-      await directApp.getByRole("button", { name: "Marcar valor" }).click();
-      await directApp.getByRole("button", { name: "Confirmar" }).click();
-      await directApp.getByText("6,25", { exact: false }).first().waitFor();
+      await directApp.getByRole("button", { name: "Registar 1 €" }).click();
+      const savingsForm = directApp.getByRole("dialog", { name: "Registar poupança" });
+      const amount = savingsForm.getByLabel("Quanto poupaste?");
+      assert.equal(await amount.inputValue(), "1");
+      await amount.fill("1,555");
+      await savingsForm.getByRole("button", { name: "Guardar poupança" }).click();
+      await savingsForm.getByRole("alert").getByText(/até duas casas decimais/).waitFor();
+      await amount.fill("1,50");
+      await savingsForm.getByRole("button", { name: "Guardar poupança" }).click();
+      await directApp.getByText("6,75", { exact: false }).first().waitFor();
       await directApp.reload({ waitUntil: "domcontentloaded" });
-      await directApp.getByText("6,25", { exact: false }).first().waitFor();
+      await directApp.getByText("6,75", { exact: false }).first().waitFor();
+      const gridSearch = directApp.getByRole("textbox", { name: "Procurar número" });
+      await gridSearch.fill("500");
+      await directApp.getByRole("button", { name: "500 euros — por concluir" }).waitFor();
       assert.equal(new URL(directApp.url()).pathname, "/app");
       await context.close();
       console.log(
