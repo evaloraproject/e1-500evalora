@@ -13,15 +13,16 @@ type Props = {
 
 export function BookPage({ src, alt, width, height, next, className = "", children }: Props) {
   const navigate = useNavigate();
+  const [ready, setReady] = useState(false);
   const [turning, setTurning] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(
-    () => () => {
+  useEffect(() => {
+    setReady(true);
+    return () => {
       if (timer.current !== null) clearTimeout(timer.current);
-    },
-    [],
-  );
+    };
+  }, []);
 
   const turnPage = () => {
     if (turning) return;
@@ -48,7 +49,7 @@ export function BookPage({ src, alt, width, height, next, className = "", childr
         <button
           type="button"
           onClick={turnPage}
-          disabled={turning}
+          disabled={!ready || turning}
           className="book-page-corner"
           aria-label="Virar a página"
           title="Virar a página"
@@ -58,7 +59,7 @@ export function BookPage({ src, alt, width, height, next, className = "", childr
       <button
         type="button"
         onClick={turnPage}
-        disabled={turning}
+        disabled={!ready || turning}
         className="mt-8 w-full rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
       >
         {next === "/app" ? "COMEÇAR O DESAFIO" : "CONTINUAR"}

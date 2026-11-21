@@ -59,14 +59,20 @@ async function assertImageLoaded(page, alt) {
       await music.waitFor();
       assert.equal(await music.getAttribute("href"), "https://www.youtube.com/watch?v=uM8oI4hqw8o");
 
-      await page.getByRole("checkbox", { name: "Parcerias" }).click();
+      const search = page.getByRole("textbox", { name: /Pesquisar recomendações/i });
+      await search.fill("WeTradeX");
+      await page.locator('a[href="https://wetradex.group/invite/boss004"]').waitFor();
+      await page.getByText("1 recomendações nesta seleção", { exact: true }).waitFor();
+      await search.clear();
+
+      await page.getByRole("button", { name: "Parcerias" }).click();
       await page.getByText("FPC Automatismos", { exact: true }).waitFor();
       await assertImageLoaded(page, "Logotipo FPC Automatismos");
 
-      await page.getByRole("checkbox", { name: "Vendas" }).click();
+      await page.getByRole("button", { name: "Vendas" }).click();
       await page.getByText("Cripto Sem Atalhos", { exact: true }).waitFor();
 
-      await page.getByRole("checkbox", { name: "Ganha Mais" }).click();
+      await page.getByRole("button", { name: "Ganha Mais" }).click();
       const bybit = page.locator('a[href="https://partner.bybit.eu/b/aff_59342_162579"]');
       await bybit.waitFor({ state: "visible" });
       assert.equal(await bybit.getAttribute("target"), "_blank");
