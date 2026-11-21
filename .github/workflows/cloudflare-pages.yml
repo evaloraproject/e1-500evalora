@@ -32,7 +32,7 @@ jobs:
           test -f dist/sw.js
           test -f dist/manifest.webmanifest
           grep -rl 'uM8oI4hqw8o' dist/assets >/dev/null
-          printf '%s\n' '{"name":"evalora1-500","pages_build_output_dir":".","compatibility_date":"2026-11-21","compatibility_flags":["nodejs_compat"]}' > dist/wrangler.json
+          printf '%s\n' '{"name":"evalora1-500","pages_build_output_dir":"dist","compatibility_date":"2026-11-21","compatibility_flags":["nodejs_compat"]}' > dist/wrangler.json
       - uses: actions/upload-artifact@v4
         with:
           name: evalora-pages
@@ -47,11 +47,12 @@ jobs:
         with:
           name: evalora-pages
           path: dist
+      - run: mv dist/wrangler.json wrangler.json
       - uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --config dist/wrangler.json --project-name=evalora1-500 --branch=evalora-github-preview
+          command: pages deploy dist --project-name=evalora1-500 --branch=evalora-github-preview
 
   production:
     if: github.ref == 'refs/heads/main' && vars.EVALORA_PAGES_PRODUCTION == 'true'
@@ -63,8 +64,9 @@ jobs:
         with:
           name: evalora-pages
           path: dist
+      - run: mv dist/wrangler.json wrangler.json
       - uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --config dist/wrangler.json --project-name=evalora1-500 --branch=main
+          command: pages deploy dist --project-name=evalora1-500 --branch=main
