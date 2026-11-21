@@ -98,14 +98,16 @@ async function assertImageLoaded(page, alt) {
       );
       await page.screenshot({ path: `test-results/${name}-progress.png`, fullPage: true });
 
-      await page.goto("/app", { waitUntil: "domcontentloaded" });
-      await page.getByRole("link", { name: "Capa", exact: true }).waitFor();
-      await page.getByRole("button", { name: "Marcar valor" }).click();
-      await page.getByRole("button", { name: "Confirmar" }).click();
-      await page.getByText("6,25", { exact: false }).first().waitFor();
-      await page.reload({ waitUntil: "domcontentloaded" });
-      await page.getByText("6,25", { exact: false }).first().waitFor();
-      assert.equal(new URL(page.url()).pathname, "/app");
+      await page.close();
+      const directApp = await context.newPage();
+      await directApp.goto("/app", { waitUntil: "domcontentloaded" });
+      await directApp.getByRole("link", { name: "Capa", exact: true }).waitFor();
+      await directApp.getByRole("button", { name: "Marcar valor" }).click();
+      await directApp.getByRole("button", { name: "Confirmar" }).click();
+      await directApp.getByText("6,25", { exact: false }).first().waitFor();
+      await directApp.reload({ waitUntil: "domcontentloaded" });
+      await directApp.getByText("6,25", { exact: false }).first().waitFor();
+      assert.equal(new URL(directApp.url()).pathname, "/app");
       await context.close();
       console.log(
         `PASS ${name}: capa/imagem, boas-vindas/vídeo e ligação da música, recomendações/categorias, link Bybit, progresso preservado, reload e acesso direto /app`,
