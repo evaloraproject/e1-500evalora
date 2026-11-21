@@ -37,7 +37,7 @@ export function BookPage({ src, alt, width, height, next, className = "", childr
 
   return (
     <div className={`book-perspective ${className}`}>
-      <div className={turning ? "book-page book-page-turning" : "book-page"}>
+      <div className={turning ? "book-page book-page-turning mx-auto w-48 max-w-full md:w-64" : "book-page mx-auto w-48 max-w-full md:w-64"}>
         <img
           src={src}
           alt={alt}

@@ -2,8 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { BookPage } from "@/components/BookPage";
 
-import logo from "@/assets/e-valora-logo.png.asset.json";
-
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -27,13 +25,18 @@ function Splash() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-background px-6 py-10">
       <BookPage
-        src={logo.url}
+        src="/primeira-pagina.jpeg"
         alt="E-VALORA — Desafio 1 → 500"
-        width={960}
-        height={1280}
+        width={1092}
+        height={1440}
         next="/boas-vindas"
-        className="w-56 max-w-full md:w-64"
-      />
+        className="w-full max-w-sm text-center"
+      >
+        <h1 className="sr-only">E-VALORA — Desafio 1 → 500</h1>
+        <p className="mt-6 text-sm leading-relaxed text-muted-foreground">
+          Um passo de cada vez até aos 125.250 €.
+        </p>
+      </BookPage>
     </main>
   );
 }
