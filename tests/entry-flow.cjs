@@ -33,7 +33,7 @@ async function assertImageLoaded(page, alt) {
     try {
       const context = await browser.newContext({ ...options, baseURL });
       const page = await context.newPage();
-      await page.goto("/");
+      await page.goto("/", { waitUntil: "domcontentloaded" });
       await page.getByRole("button", { name: "CONTINUAR" }).waitFor();
       assert.equal(new URL(page.url()).pathname, "/");
       await assertImageLoaded(page, "E-VALORA — Desafio 1 → 500");
@@ -85,12 +85,12 @@ async function assertImageLoaded(page, alt) {
         ({ key, saved }) => localStorage.setItem(key, JSON.stringify(saved)),
         { key, saved },
       );
-      await page.goto("/");
+      await page.goto("/", { waitUntil: "domcontentloaded" });
       await page.getByRole("button", { name: "CONTINUAR" }).click();
       await page.getByRole("link", { name: "COMEÇAR O DESAFIO" }).click();
       await page.waitForURL("**/app");
       await page.getByText("5,25", { exact: false }).first().waitFor();
-      await page.reload();
+      await page.reload({ waitUntil: "domcontentloaded" });
       await page.getByText("5,25", { exact: false }).first().waitFor();
       assert.deepEqual(
         await page.evaluate((storageKey) => JSON.parse(localStorage.getItem(storageKey)), key),
@@ -98,12 +98,12 @@ async function assertImageLoaded(page, alt) {
       );
       await page.screenshot({ path: `test-results/${name}-progress.png`, fullPage: true });
 
-      await page.goto("/app");
+      await page.goto("/app", { waitUntil: "domcontentloaded" });
       await page.getByRole("link", { name: "Capa", exact: true }).waitFor();
       await page.getByRole("button", { name: "Marcar valor" }).click();
       await page.getByRole("button", { name: "Confirmar" }).click();
       await page.getByText("6,25", { exact: false }).first().waitFor();
-      await page.reload();
+      await page.reload({ waitUntil: "domcontentloaded" });
       await page.getByText("6,25", { exact: false }).first().waitFor();
       assert.equal(new URL(page.url()).pathname, "/app");
       await context.close();
