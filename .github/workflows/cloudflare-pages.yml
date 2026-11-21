@@ -14,6 +14,10 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      # Preserve the public client configuration of the existing Pages deployment.
+      VITE_SUPABASE_URL: https://whlyrhpgwgxjumskshwt.supabase.co
+      VITE_SUPABASE_PUBLISHABLE_KEY: sb_publishable_XbkRIV6HUHZZatdkL17pJA_jUk1j20o
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v4
@@ -32,6 +36,8 @@ jobs:
           test -f dist/sw.js
           test -f dist/manifest.webmanifest
           grep -rl 'uM8oI4hqw8o' dist/assets >/dev/null
+          grep -rFl "$VITE_SUPABASE_URL" dist/assets >/dev/null
+          grep -rFl "$VITE_SUPABASE_PUBLISHABLE_KEY" dist/assets >/dev/null
           printf '%s\n' '{"name":"evalora1-500","pages_build_output_dir":"dist","compatibility_date":"2026-11-21","compatibility_flags":["nodejs_compat"]}' > dist/wrangler.json
       - uses: actions/upload-artifact@v4
         with:
