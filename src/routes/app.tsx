@@ -99,7 +99,7 @@ function Index() {
     }
     const normalizedActual = actual.trim().replace(",", ".");
     const value = Number(normalizedActual);
-    const validMoney = /^\\d+(?:\\.\\d{1,2})?$/.test(normalizedActual);
+    const validMoney = /^\d+(?:\.\d{1,2})?$/.test(normalizedActual);
     if (!validMoney || !Number.isFinite(value) || value < 0) {
       toast.error("Introduz um valor realizado válido (até duas casas decimais).");
       return;
