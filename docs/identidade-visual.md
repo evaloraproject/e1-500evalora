@@ -1,8 +1,7 @@
 # E-VALORA · Identidade visual
 
-- **Imagem 1** é o retrato do fundador e serve de referência privada de semelhança. Usa o cabelo escuro e curto, a barba curta e o contorno do rosto para orientar a mascote. A publicação do retrato requer indicação expressa.
 - **Imagem 2** é o logótipo oficial E-VALORA. Usa o ficheiro `public/brand/e-valora-logotipo-oficial.jpeg` por composição, mantendo as proporções e a grafia. Inclui-o em toda a publicidade que o projeto cria ou edita, incluindo capas, criativos, anúncios, stories e vídeos. Não redesenhar com IA. Em vídeo, mantém uma assinatura legível ao longo da peça e o logótipo legível na abertura ou no fecho, sem tapar informação.
-- **Imagem 3** é a base da mascote MiniBoss. O master atualizado deve parecer uma versão adulta em miniatura do fundador. Proporções 3D de mascote, cabeça ligeiramente menor que na primeira proposta, cabelo escuro curto, barba e bigode aparados, olhos visíveis e sem óculos, fato preto, camisa branca, gravata escura e apontamentos dourados discretos. O bolso do casaco fica liso, sem Bybit ou outra marca comercial. Mantém rosto, cabelo, olhos visíveis, silhueta e tom de pele consistentes entre peças.
+- **MiniBoss oficial** é a mascote original de olhos azuis grandes, cabelo preto penteado de lado, fato escuro com debrum laranja e polegar levantado. Preserva o desenho e as proporções. O logótipo E-VALORA aparece apenas no bolso do peito, no lugar do Bybit. O master aprovado é `miniboss-e-valora-oficial.png`, guardado no kit de marca do projeto.
 
 ## Parâmetros de imagem
 
@@ -12,7 +11,7 @@
 | Story, Reel ou capa vertical | 1080 × 1920, 9:16 |
 | Post quadrado | 1080 × 1080, 1:1 |
 | Capa horizontal | 1920 × 1080, 16:9 |
-| MiniBoss isolado | PNG transparente, corpo inteiro e margem à volta da silhueta |
+| MiniBoss isolado | PNG de corpo inteiro. Conserva o fundo do master oficial; usa transparência apenas quando o formato da peça o exigir. |
 
 Preto e carvão como base, branco quente no texto e dourado do logótipo como acento. Usa tipografia sem serifa de alta legibilidade e texto em português de Portugal. Se houver mensagem promocional, usa uma ideia e um próximo passo por peça. Separa a mascote e o logótipo dos textos para permitir cortes em formatos diferentes.
 
