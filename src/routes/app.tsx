@@ -185,7 +185,7 @@ function Index() {
           Faltam {formatEur(stats.remaining)}
         </p>
 
-        <Button size="lg" className="mt-5 w-full max-w-[15rem] rounded-full" onClick={markNext}>
+        <Button size="lg" className="mt-5 w-full max-w-[15rem] rounded-full" disabled={!hydrated} onClick={markNext}>
           MARCAR VALOR
         </Button>
 
