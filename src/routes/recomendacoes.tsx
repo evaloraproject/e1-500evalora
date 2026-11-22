@@ -264,14 +264,6 @@ const OFFERS: Offer[] = [
     category: "ganha-mais",
   },
   {
-    name: "DigiByte Generator Bot",
-    domain: "digibyte.org",
-    description: "Bot no Telegram para começares com DigiByte.",
-    url: "https://t.me/digibytegeneratorbot?start=8236",
-    tag: "Crypto",
-    category: "ganha-mais",
-  },
-  {
     name: "DeNet Storage & Watcher Node",
     domain: "denet.app",
     description:
