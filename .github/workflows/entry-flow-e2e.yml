@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - agent1/restore-entry-flow-issue-10
+      - fix/mission-308-entry-flow-paths
       - deploy/evalora-pages-preview
     paths:
       - ".github/workflows/entry-flow-e2e.yml"
